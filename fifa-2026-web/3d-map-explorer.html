@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FIFA WORLD CUP 26 | Explora el escenario</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#1d1a24",
+                        "secondary": "#0041c9",
+                        "outline-variant": "#ccc3d8",
+                        "primary-fixed": "#e9ddff",
+                        "on-primary-fixed": "#23005b",
+                        "secondary-fixed": "#dce1ff",
+                        "outline": "#7b7487",
+                        "on-secondary-fixed-variant": "#0039b3",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#5700c9",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#005e23",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#6f31e5",
+                        "background": "#1d1a24",
+                        "on-surface": "#fef7ff",
+                        "surface": "#12002b",
+                        "surface-container-highest": "#322f39",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#1d1a24",
+                        "on-primary-container": "#ceb8ff",
+                        "on-secondary-fixed": "#001551",
+                        "on-secondary-container": "#e4e7ff",
+                        "secondary-container": "#0356ff",
+                        "surface-container": "#231f2e",
+                        "on-surface-variant": "#ccc3d8",
+                        "on-tertiary-container": "#37df67",
+                        "tertiary": "#004417",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#00531e",
+                        "primary": "#d0bcff",
+                        "primary-fixed-dim": "#d0bcff",
+                        "surface-variant": "#4a4455",
+                        "primary-container": "#6118d7",
+                        "tertiary-fixed-dim": "#3ce36a",
+                        "surface-container-lowest": "#000000",
+                        "secondary-fixed-dim": "#b6c4ff",
+                        "inverse-primary": "#4700a8",
+                        "surface-dim": "#1d1a24",
+                        "on-tertiary-fixed": "#002108",
+                        "inverse-surface": "#fef7ff",
+                        "surface-container-high": "#2b2735",
+                        "tertiary-fixed": "#69ff87",
+                        "on-background": "#fef7ff",
+                        "inverse-on-surface": "#1d1a24",
+                        "on-primary": "#ffffff",
+                        "fifa-red": "#ee1c25",
+                        "fifa-green": "#00a651",
+                        "fifa-dark-red": "#7b1113",
+                        "fifa-dark-green": "#004417",
+                        "fifa-purple": "#4700a8",
+                        "fifa-blue": "#0041c9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "md": "24px",
+                        "xl": "80px",
+                        "margin-mobile": "16px",
+                        "xs": "4px",
+                        "lg": "48px",
+                        "sm": "12px",
+                        "base": "8px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "display-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "label-bold": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "display-md": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-bold": ["14px", {"lineHeight": "20px", "fontWeight": "700"}],
+                        "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.04em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+        }
+        .hard-shadow-primary {
+            box-shadow: 4px 4px 0 0 #000000
+        }
+        .hard-shadow-secondary {
+            box-shadow: 4px 4px 0 0 #001551
+        }
+        .hard-shadow-tertiary {
+            box-shadow: 4px 4px 0 0 #002108
+        }
+        .hard-shadow-red {
+            box-shadow: 4px 4px 0 0 #000000
+        }
+        .hard-shadow-green {
+            box-shadow: 4px 4px 0 0 #000000
+        }
+        .paper-texture {
+            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuChWFgHzcbu9uZ7CvWtFuqDNZIF2mL9bRgqNTFGJ6wQV2_4IBQbh0yho6dgdWVzEt7haQzhDrNJBwXlpQ41kXMMAdpdQQi8rvwzKTdnP1tzlMvqRa6zLBRSz9Rp_3enpAVJ3Ivc_boXBTUFK2aKTFbSuo6pN4Q9MOPh4z7_7Ch1HDLH7MN7AlZRxi41NnEbjS47XI7EmP0g3IPySVQEgEueBkpxGnkf0tcPomxRippYZNNrlah1mJT8ANdQYKHvGaZOiE81XZwGYXM);
+            background-blend-mode: overlay;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden paper-texture">
+<!-- TopNavBar -->
+<header class="docked full-width top-0 sticky z-50 bg-surface/90 backdrop-blur-md border-b-4 border-fifa-red">
+<nav class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4">
+<div class="font-headline-md text-headline-md text-primary tracking-tight">FIFA WORLD CUP 26</div>
+<div class="hidden md:flex gap-md items-center">
+<a class="font-label-bold text-label-bold text-on-surface-variant hover:text-fifa-red transition-colors" href="#">ESTADIOS</a>
+<a class="font-label-bold text-label-bold text-on-surface-variant hover:text-fifa-green transition-colors" href="#">CIUDADES</a>
+<a class="font-label-bold text-label-bold text-primary border-b-4 border-fifa-red pb-1" href="#">MAPA</a>
+<a class="font-label-bold text-label-bold text-on-surface-variant hover:text-fifa-red transition-colors" href="#">CALENDARIO</a>
+</div>
+<button class="bg-fifa-red text-on-primary font-label-bold text-label-bold px-md py-sm rounded-lg hard-shadow-red hover:scale-95 transition-all active:scale-90">
+            EXPLORAR SEDES
+        </button>
+</nav>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-[90vh] flex flex-col items-center justify-center text-center px-margin-mobile md:px-margin-desktop overflow-hidden">
+<!-- Background Illustration -->
+<div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
+<img class="w-full h-full object-cover grayscale brightness-150" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9lmK7RzMGXkBGJua4qDBQSh5qOQPLtJpL7uq9K-JGMqlZQMEK5IDYj6UL_HuItNeVCj0OAT72d-rdRJXswPasPx9Ici-ANsyHQ1MjJFVSm6PkaajlgvF2CKjUYFBryZMbqDlfnKlb7qfhATwRx6EOvQ-7XMjznvtiRTneOs_E4R2Rps3xz3LoBxDPakdH1B1Sie3TKT0v87Yda6YVe8TYvogOhYtjtJZTdcyr9tRONtb5-fTPSXtaNNA5czF0wGvGH18tBFr7gCc"/>
+</div>
+<!-- Geometric Accents -->
+<div class="absolute top-10 left-[-10%] w-64 h-64 bg-fifa-blue/30 rounded-full mix-blend-screen opacity-40 z-0 blur-3xl animate-pulse"></div>
+<div class="absolute bottom-10 right-[-5%] w-80 h-80 bg-fifa-purple/30 rounded-full mix-blend-screen opacity-30 z-0 blur-3xl"></div>
+<div class="relative z-10 max-w-5xl space-y-md">
+<h1 class="font-display-lg text-display-md md:text-display-lg text-on-surface leading-none uppercase">
+                EXPLORA EL <span class="text-fifa-red">ESCENARIO</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                Descubre las 16 ciudades sede y estadios icónicos de EE.UU., Canadá y México en una experiencia 3D inmersiva.
+            </p>
+<div class="pt-md">
+<button class="group relative inline-flex items-center gap-sm bg-fifa-green text-on-tertiary font-headline-md text-headline-md px-lg py-md rounded-xl hard-shadow-green hover:translate-y-[2px] transition-all">
+                    ABRIR MAPA 3D
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">map</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Host Cities Highlights Section -->
+<section class="py-xl px-margin-mobile md:px-margin-desktop bg-surface-container-low relative">
+<div class="flex flex-col md:flex-row justify-between items-end mb-lg gap-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg md:text-headline-lg text-on-surface uppercase leading-tight">
+                Ciudades Sede <br/><span class="text-fifa-green">Destacadas</span>
+</h2>
+<div class="w-24 h-2 bg-fifa-red mt-sm"></div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">
+                De las luces de neón de Nueva York al calor histórico de la Ciudad de México y la majestuosidad costera de Vancouver.
+            </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- USA Card -->
+<div class="group bg-surface-container-high border-2 border-outline-variant/20 p-sm rounded-xl hover:border-fifa-red transition-all flex flex-col h-full relative overflow-hidden">
+<div class="absolute top-0 left-0 w-2 h-full bg-fifa-red"></div>
+<div class="aspect-video overflow-hidden rounded-lg mb-md">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAp0EJF_zsVvXWWzKZFYnLRcC33p_01OutSvC0CxMBw6bo9SGSh2j2GtR0sbaxSUTHnBR4uthCnUFJpEv0A61n8ZVAviT3RYtc0yuXTFtk-4t_YcR45EVcYhesiJxfp6sdaGVDEwr6gXyRTQYQm6r_GKvnYkDPOXxeMY5qJqwWzAa5nVpNTouHAvX4fO_PeLhCaWg05GjCsgeR8tBS9u98-m0Z9DQ2LZzDJZsEAgwkEHGfyYqYMfewrNbennlmg5vqeaFGGFucsbBI"/>
+</div>
+<div class="px-sm flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-label-bold text-label-bold text-fifa-red uppercase tracking-widest">USA</span>
+<span class="bg-primary-container text-on-primary-container px-2 py-0.5 rounded text-[10px] font-bold">8 ESTADIOS</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm uppercase">Metlife Stadium</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md flex-grow">Vive la grandeza de East Rutherford, donde la ingeniería moderna se encuentra con la energía eléctrica del horizonte de Nueva York.</p>
+<button class="flex items-center gap-xs font-label-bold text-label-bold text-fifa-red group-hover:underline decoration-2 underline-offset-4">
+                        VER DETALLES <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Canada Card -->
+<div class="group bg-surface-container-high border-2 border-outline-variant/20 p-sm rounded-xl hover:border-secondary transition-all flex flex-col h-full relative overflow-hidden">
+<div class="absolute top-0 left-0 w-2 h-full bg-secondary"></div>
+<div class="aspect-video overflow-hidden rounded-lg mb-md">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQDEUb4zGr7mODbJ1UiYU8xxHm4-0D1F6XYSHj2-58qNeGvrd0JGthXUkQ0duAusQdhVSmJh51Bhat053VPxi2ZHqfSuOQPGi-MiWqMvtyK5HZrtZQ6_o1OoLWvC5XDPAvjNiZuJUoWx-IHwcGVZ5GwR8KXnN8otPIDt-kz3Bx6-II38SnpbJSNrG2xVGWi2cUw0R-cZTHUSVKjSvHBU-WUOYAPFYmXh27XvK32UdeyLWFUqphZZAi_L9Oi-4ZPpKz6htVDnXVxN4"/>
+</div>
+<div class="px-sm flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-label-bold text-label-bold text-secondary uppercase tracking-widest">Canada</span>
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded text-[10px] font-bold">2 ESTADIOS</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm uppercase">BC Place</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md flex-grow">Una obra maestra costera en Vancouver con uno de los techos retráctiles con cables de soporte más grandes del mundo.</p>
+<button class="flex items-center gap-xs font-label-bold text-label-bold text-secondary group-hover:underline decoration-2 underline-offset-4">
+                        VER DETALLES <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Mexico Card -->
+<div class="group bg-surface-container-high border-2 border-outline-variant/20 p-sm rounded-xl hover:border-fifa-green transition-all flex flex-col h-full relative overflow-hidden">
+<div class="absolute top-0 left-0 w-2 h-full bg-fifa-green"></div>
+<div class="aspect-video overflow-hidden rounded-lg mb-md">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCg6uyImwx5qvEvgms4pdWy0VASnUahI4DWokbJkxl6AnXEK-AyUWeRCLIRku35jiaYuXJhA6AHGMXS9JKOmIzxD2-KdKlM66nAWRiKvmSu6j7BqBneelZIKoaYU5Jcinr-dvDjSU-j_uEY2fhH18MwTV_gmV-PD3JtPs0g8_iqzWrIwI1QePpX74jGz-YxTG8-W7AmSgVKBpgiEXUKE_rTL3aDMWUDGFd_OL_rwA3GxIFcf5sHLzpRfNySabVD8xIctP3k96RPfI"/>
+</div>
+<div class="px-sm flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-label-bold text-label-bold text-fifa-green uppercase tracking-widest">Mexico</span>
+<span class="bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded text-[10px] font-bold">3 ESTADIOS</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm uppercase">Estadio Azteca</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md flex-grow">La legendaria catedral del fútbol mundial. Erguido en la Ciudad de México, sigue siendo el escenario máximo de la grandeza.</p>
+<button class="flex items-center gap-xs font-label-bold text-label-bold text-fifa-green group-hover:underline decoration-2 underline-offset-4">
+                        VER DETALLES <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Bento Section -->
+<section class="py-xl px-margin-mobile md:px-margin-desktop overflow-hidden bg-surface">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md">
+<div class="md:col-span-2 bg-primary-container text-on-primary p-lg rounded-xl hard-shadow-primary flex flex-col justify-center border-2 border-primary/20">
+<div class="font-display-lg text-display-md md:text-display-lg leading-none mb-xs">104</div>
+<div class="font-headline-md text-headline-md uppercase tracking-tight">PARTIDOS</div>
+<p class="font-body-md mt-sm opacity-90">El torneo más grande en la historia de la Copa Mundial de la FIFA en tres naciones.</p>
+</div>
+<div class="bg-fifa-red text-on-primary p-lg rounded-xl hard-shadow-red flex flex-col items-center justify-center text-center">
+<div class="font-display-lg text-display-md leading-none mb-xs">48</div>
+<div class="font-label-bold text-label-bold uppercase tracking-widest">EQUIPOS</div>
+</div>
+<div class="bg-fifa-green text-on-tertiary p-lg rounded-xl hard-shadow-green flex flex-col items-center justify-center text-center">
+<div class="font-display-lg text-display-md leading-none mb-xs">16</div>
+<div class="font-label-bold text-label-bold uppercase tracking-widest">CIUDADES SEDE</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="full-width bottom-0 bg-surface-container-high border-t-2 border-outline-variant/20">
+<div class="flex flex-col md:flex-row justify-between items-center gap-md py-lg px-margin-mobile md:px-margin-desktop w-full">
+<div class="flex flex-col gap-xs items-center md:items-start">
+<div class="font-headline-lg text-headline-lg md:text-headline-lg-mobile text-primary">FIFA</div>
+<div class="font-body-md text-body-md text-on-surface-variant">© 2026 FIFA. USA · CANADA · MEXICO</div>
+</div>
+<div class="flex flex-wrap justify-center gap-md">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-fifa-red underline decoration-2 underline-offset-4 transition-opacity hover:opacity-80" href="#">Socios Oficiales</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-fifa-red underline decoration-2 underline-offset-4 transition-opacity hover:opacity-80" href="#">Política de Privacidad</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-fifa-green underline decoration-2 underline-offset-4 transition-opacity hover:opacity-80" href="#">Términos de Servicio</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-fifa-green underline decoration-2 underline-offset-4 transition-opacity hover:opacity-80" href="#">Contacto</a>
+</div>
+</div>
+</footer>
+
+</body></html>

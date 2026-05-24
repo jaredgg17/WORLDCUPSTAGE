@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FIFA World Cup 2026 | Estadios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="dns-prefetch" href="https://upload.wikimedia.org"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface-container-low": "#f9f1ff","secondary": "#0041c9","outline-variant": "#ccc3d8",
+          "primary-fixed": "#e9ddff","on-primary-fixed": "#23005b","secondary-fixed": "#dce1ff",
+          "outline": "#7b7487","on-secondary-fixed-variant": "#0039b3","error-container": "#ffdad6",
+          "error": "#ba1a1a","on-primary-fixed-variant": "#5700c9","on-error": "#ffffff",
+          "tertiary-container": "#005e23","on-secondary": "#ffffff","surface-tint": "#6f31e5",
+          "background": "#fef7ff","on-surface": "#1d1a24","surface": "#fef7ff",
+          "surface-container-highest": "#e7e0ee","on-tertiary": "#ffffff","surface-bright": "#fef7ff",
+          "on-primary-container": "#ceb8ff","on-secondary-fixed": "#001551",
+          "on-secondary-container": "#e4e7ff","secondary-container": "#0356ff",
+          "surface-container": "#f3ebfa","on-surface-variant": "#4a4455",
+          "on-tertiary-container": "#37df67","tertiary": "#004417","on-error-container": "#93000a",
+          "on-tertiary-fixed-variant": "#00531e","primary": "#4700a8","primary-fixed-dim": "#d0bcff",
+          "surface-variant": "#e7e0ee","primary-container": "#6118d7","tertiary-fixed-dim": "#3ce36a",
+          "surface-container-lowest": "#ffffff","secondary-fixed-dim": "#b6c4ff",
+          "inverse-primary": "#d0bcff","surface-dim": "#dfd7e6","on-tertiary-fixed": "#002108",
+          "inverse-surface": "#322f39","surface-container-high": "#ede5f4",
+          "tertiary-fixed": "#69ff87","on-background": "#1d1a24","inverse-on-surface": "#f6eefd",
+          "on-primary": "#ffffff","wc-red": "#ED1C24","wc-green": "#00B140"
+        },
+        borderRadius: {"DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px"},
+        spacing: {"gutter": "24px","md": "24px","xl": "80px","margin-mobile": "16px","xs": "4px","lg": "48px","sm": "12px","base": "8px","margin-desktop": "64px"},
+        fontFamily: {"label-sm": ["Plus Jakarta Sans"],"headline-lg": ["Plus Jakarta Sans"],"headline-lg-mobile": ["Plus Jakarta Sans"],"display-md": ["Plus Jakarta Sans"],"body-lg": ["Plus Jakarta Sans"],"body-md": ["Plus Jakarta Sans"],"headline-md": ["Plus Jakarta Sans"],"label-bold": ["Plus Jakarta Sans"],"display-lg": ["Plus Jakarta Sans"]},
+        fontSize: {
+          "label-sm": ["12px",{"lineHeight":"16px","fontWeight":"500"}],
+          "headline-lg": ["32px",{"lineHeight":"40px","fontWeight":"700"}],
+          "headline-lg-mobile": ["28px",{"lineHeight":"36px","fontWeight":"700"}],
+          "display-md": ["48px",{"lineHeight":"56px","letterSpacing":"-0.03em","fontWeight":"800"}],
+          "body-lg": ["18px",{"lineHeight":"28px","fontWeight":"400"}],
+          "body-md": ["16px",{"lineHeight":"24px","fontWeight":"400"}],
+          "headline-md": ["24px",{"lineHeight":"32px","fontWeight":"700"}],
+          "label-bold": ["14px",{"lineHeight":"20px","fontWeight":"700"}],
+          "display-lg": ["72px",{"lineHeight":"80px","letterSpacing":"-0.04em","fontWeight":"800"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24 }
+  .textured-bg {
+    background-color: #fef7ff;
+    background-image: radial-gradient(at 0% 0%, rgba(111,49,229,0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(0,65,201,0.05) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(237,28,36,0.04) 0px, transparent 50%);
+  }
+  body { animation: bodyFadeIn 0.4s ease forwards; font-synthesis: none; }
+  @keyframes bodyFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .detail-label { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 700; font-feature-settings: normal; font-variation-settings: normal; }
+  .fade-out { opacity: 0 !important; transition: opacity 0.25s ease !important; animation: none; }
+  .stadium-card { transition: all 0.3s ease; }
+  .stadium-card.hidden-card { display: none !important; }
+
+  /* Mobile horizontal carousel */
+  @media (max-width: 767px) {
+    #stadiums-grid {
+      display: flex !important;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 12px;
+      gap: 16px;
+    }
+    #stadiums-grid::-webkit-scrollbar { display: none; }
+    #stadiums-grid > .stadium-card {
+      flex: 0 0 290px !important;
+      scroll-snap-align: start;
+    }
+    #stadiums-grid > .lg\:col-span-full {
+      flex: 0 0 calc(100vw - 32px) !important;
+      scroll-snap-align: start;
+    }
+  }
+  .swipe-hint { display: none; }
+  @media (max-width: 767px) { .swipe-hint { display: flex; } }
+
+  /* Modal */
+  #modal-overlay { display: none; }
+  #modal-overlay.open { display: flex; }
+</style>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md textured-bg">
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="fixed inset-0 bg-background z-[100] flex flex-col items-center justify-center gap-xl hidden" style="opacity:0;transition:opacity 0.3s">
+  <button id="close-menu" class="absolute top-6 right-6 text-on-surface">
+    <span class="material-symbols-outlined text-4xl">close</span>
+  </button>
+  <a href="index.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-wc-red transition-colors">INICIO</a>
+  <a href="stadiums.html" class="font-label-bold text-2xl text-wc-red border-b-4 border-wc-red pb-1">ESTADIOS</a>
+  <a href="cities.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-wc-red transition-colors">CIUDADES</a>
+  <a href="map.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-wc-red transition-colors">MAPA</a>
+  <a href="schedule.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-wc-red transition-colors">CALENDARIO</a>
+</div>
+
+<!-- Stadium Detail Modal -->
+<div id="modal-overlay" class="fixed inset-0 z-[200] bg-black/60 backdrop-blur-sm items-center justify-center p-md">
+  <div class="bg-surface-container-lowest rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-outline-variant">
+    <div id="modal-image-wrap" class="relative h-64 bg-surface-variant">
+      <img id="modal-img" class="w-full h-full object-cover" src="" alt=""/>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+      <button id="modal-close" class="absolute top-4 right-4 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors">
+        <span class="material-symbols-outlined">✖️</span>
+      </button>
+      <div id="modal-badge" class="absolute bottom-4 left-4 px-sm py-xs rounded-lg font-label-bold text-label-sm uppercase tracking-wider text-white"></div>
+    </div>
+    <div class="p-lg">
+      <h2 id="modal-name" class="font-display-md text-3xl font-extrabold text-on-surface mb-xs"></h2>
+      <p id="modal-city" class="text-on-surface-variant font-body-md mb-lg flex items-center gap-xs">
+        <span class="material-symbols-outlined text-wc-red text-[20px]">location_on</span>
+        <span></span>
+      </p>
+      <div class="grid grid-cols-2 gap-md mb-lg">
+        <div class="bg-surface-container p-md rounded-xl">
+          <p class="detail-label text-[11px] text-on-surface-variant tracking-widest mb-1">Capacidad</p>
+          <p id="modal-capacity" class="font-headline-md text-wc-red text-2xl font-extrabold"></p>
+        </div>
+        <div class="bg-surface-container p-md rounded-xl">
+          <p class="detail-label text-[11px] text-on-surface-variant tracking-widest mb-1">Nación Anfitriona</p>
+          <p id="modal-nation" class="font-headline-md text-on-surface text-xl font-bold"></p>
+        </div>
+      </div>
+      <p id="modal-desc" class="font-body-md text-on-surface-variant leading-relaxed mb-lg"></p>
+      <a href="map.html" class="inline-flex items-center gap-sm bg-wc-red text-white font-label-bold text-label-bold px-md py-sm rounded-lg hover:opacity-90 transition-opacity">
+        <span class="material-symbols-outlined text-sm">map</span> Ver en el Mapa
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="bg-surface/80 backdrop-blur-md border-b border-outline-variant sticky top-0 z-50 flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4">
+  <a href="index.html" class="font-headline-md text-headline-md text-primary tracking-tight hover:text-wc-red transition-colors">FIFA WORLD CUP 26</a>
+  <nav class="hidden md:flex items-center gap-lg">
+    <a href="stadiums.html" class="font-label-bold text-label-bold text-wc-red border-b-2 border-wc-red pb-1">ESTADIOS</a>
+    <a href="cities.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-wc-red transition-colors">CIUDADES</a>
+    <a href="map.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-wc-red transition-colors">MAPA</a>
+    <a href="schedule.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-wc-red transition-colors">CALENDARIO</a>
+  </nav>
+  <div class="flex items-center gap-sm">
+    <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center text-on-surface hover:text-wc-red transition-colors">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <a href="map.html" class="hidden md:block bg-primary text-on-primary font-label-bold text-label-bold px-md py-sm rounded-lg hover:bg-primary-container transition-all">EXPLORAR</a>
+  </div>
+</header>
+
+<main class="min-h-screen px-margin-mobile md:px-margin-desktop py-xl">
+  <!-- Hero -->
+  <section class="mb-xl relative">
+    <div class="absolute -top-12 -left-12 w-64 h-64 bg-primary-fixed-dim rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+    <div class="absolute top-24 right-0 w-80 h-80 bg-secondary/10 rounded-full mix-blend-multiply filter blur-3xl opacity-25"></div>
+    <h1 class="font-display-md text-display-md mb-md max-w-3xl relative z-10">
+      Testigo de la Historia en <span class="text-wc-red">16 Estadios</span> Legendarios
+    </h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-lg">
+      Desde el histórico Azteca hasta los modernos milagros arquitectónicos en Los Ángeles y Toronto, la Copa del Mundo 2026 abarca un continente de pasión futbolística.
+    </p>
+    <!-- Filter Chips -->
+    <div class="flex flex-wrap gap-sm" id="filter-chips">
+      <button data-filter="all" class="filter-chip bg-wc-red text-white px-md py-xs font-label-bold text-label-bold rounded-full border-2 border-wc-red transition-all">TODOS (16)</button>
+      <button data-filter="usa" class="filter-chip bg-surface-container-lowest text-on-surface px-md py-xs font-label-bold text-label-bold rounded-full border-2 border-secondary/40 hover:border-secondary transition-all">USA (11)</button>
+      <button data-filter="mexico" class="filter-chip bg-surface-container-lowest text-on-surface px-md py-xs font-label-bold text-label-bold rounded-full border-2 border-wc-green/40 hover:border-wc-green transition-all">MÉXICO (3)</button>
+      <button data-filter="canada" class="filter-chip bg-surface-container-lowest text-on-surface px-md py-xs font-label-bold text-label-bold rounded-full border-2 border-wc-red/30 hover:border-wc-red transition-all">CANADÁ (2)</button>
+    </div>
+  </section>
+
+  <!-- Stadium Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter" id="stadiums-grid">
+
+    <!-- Azteca -->
+    <div class="stadium-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all flex flex-col group shadow-sm" data-country="mexico">
+      <div class="relative h-48 bg-surface-variant">
+        <img alt="Azteca Stadium" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Soccer_game_at_the_Azteca_Stadium.JPG/1280px-Soccer_game_at_the_Azteca_Stadium.JPG"/>
+        <div class="absolute top-4 right-4 bg-wc-green text-white px-sm py-xs rounded-lg font-label-bold text-label-sm uppercase tracking-wider">MEXICO</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md mb-xs">Estadio Azteca</h3>
+        <p class="text-on-surface-variant font-body-md mb-md flex items-center gap-xs"><span class="material-symbols-outlined text-wc-red text-[20px]">location_on</span> Mexico City, Mexico</p>
+        <div class="mt-auto flex justify-between items-center border-t border-surface-container-highest pt-md">
+          <div class="flex flex-col"><span class="detail-label text-[10px] text-on-surface-variant tracking-widest">Capacidad</span><span class="font-headline-md text-wc-red">87,523</span></div>
+          <button class="details-btn bg-surface-container-high text-primary font-label-bold text-label-bold px-sm py-base rounded-lg hover:bg-wc-red hover:text-white transition-colors"
+            data-name="Estadio Azteca" data-city="Mexico City, Mexico" data-capacity="87,523" data-nation="Mexico" data-badge-color="bg-wc-green"
+            data-desc="El icónico Estadio Azteca, ubicado en la Ciudad de México, es un templo del fútbol con una capacidad de 87,523 espectadores. Con su rica historia y atmósfera electrizante, será el escenario perfecto para los momentos más memorables de la Copa del Mundo 2026."
+            data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Soccer_game_at_the_Azteca_Stadium.JPG/1280px-Soccer_game_at_the_Azteca_Stadium.JPG">DETALLES</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SoFi -->
+    <div class="stadium-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all flex flex-col group shadow-sm" data-country="usa">
+      <div class="relative h-48 bg-surface-variant">
+        <img alt="SoFi Stadium" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/SoFi_Stadium.jpg/1280px-SoFi_Stadium.jpg"/>
+        <div class="absolute top-4 right-4 bg-secondary text-on-secondary px-sm py-xs rounded-lg font-label-bold text-label-sm uppercase tracking-wider">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md mb-xs">SoFi Stadium</h3>
+        <p class="text-on-surface-variant font-body-md mb-md flex items-center gap-xs"><span class="material-symbols-outlined text-wc-red text-[20px]">location_on</span> Los Angeles, USA</p>
+        <div class="mt-auto flex justify-between items-center border-t border-surface-container-highest pt-md">
+          <div class="flex flex-col"><span class="detail-label text-[10px] text-on-surface-variant tracking-widest">Capacidad</span><span class="font-headline-md text-wc-red">70,240</span></div>
+          <button class="details-btn bg-surface-container-high text-primary font-label-bold text-label-bold px-sm py-base rounded-lg hover:bg-wc-red hover:text-white transition-colors"
+            data-name="SoFi Stadium" data-city="Los Angeles, USA" data-capacity="70,240" data-nation="USA" data-badge-color="bg-secondary"
+            data-desc="Uno de los estadios más tecnológicamente avanzados del mundo, el SoFi Stadium en Inglewood cuenta con una capacidad de 70,000 asientos bajo un techo translúcido. Su diseño futurista y sus instalaciones de última generación proporcionarán un telón de fondo inolvidable para los partidos de la Copa del Mundo 2026."
+            data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/SoFi_Stadium.jpg/1280px-SoFi_Stadium.jpg">DETALLES</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MetLife -->
+    <div class="stadium-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all flex flex-col group shadow-sm" data-country="usa">
+      <div class="relative h-48 bg-surface-variant">
+        <img alt="MetLife Stadium" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Metlife_stadium_%28Aerial_view%29.jpg/1280px-Metlife_stadium_%28Aerial_view%29.jpg"/>
+        <div class="absolute top-4 right-4 bg-secondary text-on-secondary px-sm py-xs rounded-lg font-label-bold text-label-sm uppercase tracking-wider">USA</div>
+        <div class="absolute top-4 left-4 bg-wc-red text-white px-sm py-xs rounded-lg font-label-bold text-label-sm uppercase tracking-wider text-[10px]">FINAL</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md mb-xs">MetLife Stadium</h3>
+        <p class="text-on-surface-variant font-body-md mb-md flex items-center gap-xs"><span class="material-symbols-outlined text-wc-red text-[20px]">location_on</span> New York/NJ, USA</p>
+        <div class="mt-auto flex justify-between items-center border-t border-surface-container-highest pt-md">
+          <div class="flex flex-col"><span class="detail-label text-[10px] text-on-surface-variant tracking-widest">Capacidad</span><span class="font-headline-md text-wc-red">82,500</span></div>
+          <button class="details-btn bg-surface-container-high text-primary font-label-bold text-label-bold px-sm py-base rounded-lg hover:bg-wc-red hover:text-white transition-colors"
+            data-name="MetLife Stadium" data-city="East Rutherford, New York/NJ, USA" data-capacity="82,500" data-nation="USA" data-badge-color="bg-secondary"
+            data-desc="Casa de la Final de la Copa del Mundo 2026, el MetLife Stadium es uno de los estadios más grandes de Estados Unidos. Ubicado a solo 16 kilómetros de Midtown Manhattan, albergará el partido más importante del fútbol con el icónico horizonte de Nueva York como telón de fondo. Un total de 8 partidos."
+            data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Metlife_stadium_%28Aerial_view%29.jpg/1280px-Metlife_stadium_%28Aerial_view%29.jpg">DETALLES</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BC Place -->
+    <div class="stadium-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all flex flex-col group shadow-sm" data-country="canada">
+      <div class="relative h-48 bg-surface-variant">
+        <img alt="BC Place" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/BCplace_stadium.jpg/1280px-BCplace_stadium.jpg"/>
+        <div class="absolute top-4 right-4 bg-wc-green text-white px-sm py-xs rounded-lg font-label-bold text-label-sm uppercase tracking-wider">CANADÁ</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md mb-xs">BC Place</h3>
+        <p class="text-on-surface-variant font-body-md mb-md flex items-center gap-xs"><span class="material-symbols-outlined text-wc-red text-[20px]">location_on</span> Vancouver, Canadá</p>
+        <div class="mt-auto flex justify-between items-center border-t border-surface-container-highest pt-md">
+          <div class="flex flex-col"><span class="detail-label text-[10px] text-on-surface-variant tracking-widest">Capacidad</span><span class="font-headline-md text-wc-red">54,500</span></div>
+          <button class="details-btn bg-surface-container-high text-primary font-label-bold text-label-bold px-sm py-base rounded-lg hover:bg-wc-red hover:text-white transition-colors"
+            data-name="BC Place" data-city="Vancouver, Canadá" data-capacity="54,500" data-nation="Canadá" data-badge-color="bg-wc-green"
+            data-desc="BC Place es un estadio de múltiples propósitos con techo domado en el centro de Vancouver, Columbia Británica. Cuenta con una de las estructuras de techo retráctil soportadas por cables más grandes del mundo. rodeado por montañas y océano, ofrece una de las experiencias de día de partido más escénicas en América del Norte."
+            data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/BCplace_stadium.jpg/1280px-BCplace_stadium.jpg">DETALLES</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mercedes-Benz -->
+    <div class="stadium-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all flex flex-col group shadow-sm" data-country="usa">
+      <div class="relative h-48 bg-surface-variant">
+        <img alt="Mercedes-Benz Stadium" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Mercedes-Benz_Stadium%2C_Atlanta%2C_GA_%2833597623348%29.jpg/1280px-Mercedes-Benz_Stadium%2C_Atlanta%2C_GA_%2833597623348%29.jpg"/>
+        <div class="absolute top-4 right-4 bg-secondary text-on-secondary px-sm py-xs rounded-lg font-label-bold text-label-sm uppercase tracking-wider">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md mb-xs">Mercedes-Benz Stadium</h3>
+        <p class="text-on-surface-variant font-body-md mb-md flex items-center gap-xs"><span class="material-symbols-outlined text-wc-red text-[20px]">location_on</span> Atlanta, USA</p>
+        <div class="mt-auto flex justify-between items-center border-t border-surface-container-highest pt-md">
+          <div class="flex flex-col"><span class="detail-label text-[10px] text-on-surface-variant tracking-widest">Capacidad</span><span class="font-headline-md text-wc-red">71,000</span></div>
+          <button class="details-btn bg-surface-container-high text-primary font-label-bold text-label-bold px-sm py-base rounded-lg hover:bg-wc-red hover:text-white transition-colors"
+            data-name="Mercedes-Benz Stadium" data-city="Atlanta, USA" data-capacity="71,000" data-nation="USA" data-badge-color="bg-secondary"
+            data-desc="El Mercedes-Benz Stadium en Atlanta es uno de los estadios más innovadores del mundo, con un techo retráctil modelado después del Panteón en Roma. Su tablero de video HALO es el más grande del mundo, proporcionando a los aficionados una experiencia de visualización sin igual."
+            data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Mercedes-Benz_Stadium%2C_Atlanta%2C_GA_%2833597623348%29.jpg/1280px-Mercedes-Benz_Stadium%2C_Atlanta%2C_GA_%2833597623348%29.jpg">DETALLES</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estadio BBVA -->
+    <div class="stadium-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all flex flex-col group shadow-sm" data-country="mexico">
+      <div class="relative h-48 bg-surface-variant">
+        <img alt="Estadio BBVA" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Estadio_BBVA_Bancomer.jpg/1280px-Estadio_BBVA_Bancomer.jpg"/>
+        <div class="absolute top-4 right-4 bg-wc-green text-white px-sm py-xs rounded-lg font-label-bold text-label-sm uppercase tracking-wider">MÉXICO</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md mb-xs">Estadio BBVA</h3>
+        <p class="text-on-surface-variant font-body-md mb-md flex items-center gap-xs"><span class="material-symbols-outlined text-wc-red text-[20px]">location_on</span> Monterrey, México</p>
+        <div class="mt-auto flex justify-between items-center border-t border-surface-container-highest pt-md">
+          <div class="flex flex-col"><span class="detail-label text-[10px] text-on-surface-variant tracking-widest">Capacidad</span><span class="font-headline-md text-wc-red">53,500</span></div>
+          <button class="details-btn bg-surface-container-high text-primary font-label-bold text-label-bold px-sm py-base rounded-lg hover:bg-wc-red hover:text-white transition-colors"
+            data-name="Estadio BBVA" data-city="Monterrey, Mexico" data-capacity="53,500" data-nation="Mexico" data-badge-color="bg-wc-green"
+            data-desc="El Estadio BBVA, sede del Club de Fútbol Monterrey, está ubicado dramáticamente contra las montañas de la Sierra Madre. Su diseño único y abierto permite a los aficionados disfrutar de vistas del famoso Cerro de la Silla, convirtiéndolo en uno de los estadios más pintorescos del mundo."
+            data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Estadio_BBVA_Bancomer.jpg/1280px-Estadio_BBVA_Bancomer.jpg">DETALLES</button>
+        </div>
+      </div>
+      <!-- Estadio Akron guadalajara -->
+    </div>
+
+     <div class="stadium-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all flex flex-col group shadow-sm" data-country="mexico">
+      <div class="relative h-48 bg-surface-variant">
+        <img alt="Estadio Akron" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/EstadioAkronGDL.jpg/1280px-EstadioAkronGDL.jpg"/>
+        <div class="absolute top-4 right-4 bg-wc-green text-white px-sm py-xs rounded-lg font-label-bold text-label-sm uppercase tracking-wider">MÉXICO</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md mb-xs">Estadio Akron</h3>
+        <p class="text-on-surface-variant font-body-md mb-md flex items-center gap-xs"><span class="material-symbols-outlined text-wc-red text-[20px]">location_on</span> Guadalajara, México</p>
+        <div class="mt-auto flex justify-between items-center border-t border-surface-container-highest pt-md">
+          <div class="flex flex-col"><span class="detail-label text-[10px] text-on-surface-variant tracking-widest">Capacidad</span><span class="font-headline-md text-wc-red">53,500</span></div>
+          <button class="details-btn bg-surface-container-high text-primary font-label-bold text-label-bold px-sm py-base rounded-lg hover:bg-wc-red hover:text-white transition-colors"
+            data-name="Estadio Akron" data-city="Guadalajara, Mexico" data-capacity="53,500" data-nation="Mexico" data-badge-color="bg-wc-green"
+            data-desc="El Estadio Akron, sede del Club de Fútbol Guadalajara, está ubicado en el corazón de la ciudad. Su diseño moderno y funcional lo convierte en uno de los estadios más importantes de México."
+            data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/EstadioAkronGDL.jpg/1280px-EstadioAkronGDL.jpg">DETALLES</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arrowhead -->
+    <div class="stadium-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all flex flex-col group shadow-sm" data-country="usa">
+      <div class="relative h-48 bg-surface-variant">
+        <img alt="Arrowhead Stadium" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Kansas_City_Arrowhead_Stadium.jpg/1280px-Kansas_City_Arrowhead_Stadium.jpg"/>
+        <div class="absolute top-4 right-4 bg-secondary text-on-secondary px-sm py-xs rounded-lg font-label-bold text-label-sm uppercase tracking-wider">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md mb-xs">Arrowhead Stadium</h3>
+        <p class="text-on-surface-variant font-body-md mb-md flex items-center gap-xs"><span class="material-symbols-outlined text-wc-red text-[20px]">location_on</span> Kansas City, USA</p>
+        <div class="mt-auto flex justify-between items-center border-t border-surface-container-highest pt-md">
+          <div class="flex flex-col"><span class="detail-label text-[10px] text-on-surface-variant tracking-widest">Capacidad</span><span class="font-headline-md text-wc-red">76,416</span></div>
+          <button class="details-btn bg-surface-container-high text-primary font-label-bold text-label-bold px-sm py-base rounded-lg hover:bg-wc-red hover:text-white transition-colors"
+            data-name="Arrowhead Stadium" data-city="Kansas City, USA" data-capacity="76,416" data-nation="USA" data-badge-color="bg-secondary"
+            data-desc="Considerado uno de los estadios más ruidosos de la NFL, el Arrowhead Stadium en Kansas City lleva a su apasionada base de seguidores al escenario mundial. Su rica cultura deportiva y ubicación central en Estados Unidos lo convierten en un destino ideal para los fanáticos de la Copa del Mundo 2026."
+            data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Kansas_City_Arrowhead_Stadium.jpg/1280px-Kansas_City_Arrowhead_Stadium.jpg">DETALLES</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gillette -->
+    <div class="stadium-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all flex flex-col group shadow-sm" data-country="usa">
+      <div class="relative h-48 bg-surface-variant">
+        <img alt="Gillette Stadium" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Gillette_Stadium.JPG/1280px-Gillette_Stadium.JPG"/>
+        <div class="absolute top-4 right-4 bg-secondary text-on-secondary px-sm py-xs rounded-lg font-label-bold text-label-sm uppercase tracking-wider">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md mb-xs">Gillette Stadium</h3>
+        <p class="text-on-surface-variant font-body-md mb-md flex items-center gap-xs"><span class="material-symbols-outlined text-wc-red text-[20px]">location_on</span> Boston/Foxboro, USA</p>
+        <div class="mt-auto flex justify-between items-center border-t border-surface-container-highest pt-md">
+          <div class="flex flex-col"><span class="detail-label text-[10px] text-on-surface-variant tracking-widest">Capacidad</span><span class="font-headline-md text-wc-red">65,878</span></div>
+          <button class="details-btn bg-surface-container-high text-primary font-label-bold text-label-bold px-sm py-base rounded-lg hover:bg-wc-red hover:text-white transition-colors"
+            data-name="Gillette Stadium" data-city="Boston/Foxboro, USA" data-capacity="65,878" data-nation="USA" data-badge-color="bg-secondary"
+            data-desc="Casa de los New England Patriots, el Gillette Stadium está ubicado a 48 kilómetros al sur de Boston y ofrece acceso fácil desde una de las ciudades más históricas y apasionadas por el fútbol de América. La proximidad del estadio a los puntos de interés cultural de Boston lo convierte en un destino principal para los fanáticos internacionales."
+            data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Gillette_Stadium.JPG/1280px-Gillette_Stadium.JPG">DETALLES</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BMO Field -->
+    <div class="stadium-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all flex flex-col group shadow-sm" data-country="canada">
+      <div class="relative h-48 bg-surface-variant">
+        <img alt="BMO Field" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Toronto_-_ON_-_BMO_Field.jpg/1280px-Toronto_-_ON_-_BMO_Field.jpg"/>
+        <div class="absolute top-4 right-4 bg-wc-green text-white px-sm py-xs rounded-lg font-label-bold text-label-sm uppercase tracking-wider">CANADÁ</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md mb-xs">BMO Field</h3>
+        <p class="text-on-surface-variant font-body-md mb-md flex items-center gap-xs"><span class="material-symbols-outlined text-wc-red text-[20px]">location_on</span> Toronto, Canadá</p>
+        <div class="mt-auto flex justify-between items-center border-t border-surface-container-highest pt-md">
+          <div class="flex flex-col"><span class="detail-label text-[10px] text-on-surface-variant tracking-widest">Capacidad</span><span class="font-headline-md text-wc-red">45,736</span></div>
+          <button class="details-btn bg-surface-container-high text-primary font-label-bold text-label-bold px-sm py-base rounded-lg hover:bg-wc-red hover:text-white transition-colors"
+            data-name="BMO Field" data-city="Toronto, Canadá" data-capacity="45,736" data-nation="Canadá" data-badge-color="bg-wc-green"
+            data-desc="BMO Field es el hogar del Toronto FC y el estadio principal del fútbol canadiense. Ubicado en el corazón de Toronto junto al lago Ontario, el estadio será ampliado para la Copa del Mundo 2026. Su emocionante atmósfera y su icónica ubicación frente a la CN Tower lo convierten en uno de los escenarios más especiales del torneo."
+            data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Toronto_BMO_Field_in_2024.jpg/1280px-Toronto_BMO_Field_in_2024.jpg">DETALLES</button>
+        </div>
+      </div>
+    </div>
+     <!--Hard rock stadium-->
+    <div class="stadium-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all flex flex-col group shadow-sm" data-country="usa">
+      <div class="relative h-48 bg-surface-variant">
+        <img alt="Hard Rock Stadium" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Hard_Rock_Stadium.jpg/1280px-Hard_Rock_Stadium.jpg"/>
+        <div class="absolute top-4 right-4 bg-wc-green text-white px-sm py-xs rounded-lg font-label-bold text-label-sm uppercase tracking-wider">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md mb-xs">Hard Rock Stadium</h3>
+        <p class="text-on-surface-variant font-body-md mb-md flex items-center gap-xs"><span class="material-symbols-outlined text-wc-red text-[20px]">location_on</span> USA, Miami</p>
+        <div class="mt-auto flex justify-between items-center border-t border-surface-container-highest pt-md">
+          <div class="flex flex-col"><span class="detail-label text-[10px] text-on-surface-variant tracking-widest">Capacidad</span><span class="font-headline-md text-wc-red">65,326</span></div>
+          <button class="details-btn bg-surface-container-high text-primary font-label-bold text-label-bold px-sm py-base rounded-lg hover:bg-wc-red hover:text-white transition-colors"
+            data-name="Hard Rock Stadium" data-city="USA, Miami" data-capacity="65,326" data-nation="USA" data-badge-color="bg-wc-green"
+            data-desc="Hard Rock Stadium es un estadio de múltiples propósitos ubicado en Miami Gardens, Florida. Con una capacidad de 65,326 asientos, es conocido por su ambiente vibrante y su proximidad a la cultura latina de Miami, lo que lo convierte en un escenario ideal para la Copa del Mundo 2026."
+            data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Hard_Rock_Stadium.jpg/1280px-Hard_Rock_Stadium.jpg">DETALLES</button>
+        </div>
+      </div>
+    </div>
+
+     <!--AT&T Stadium, Dallas-->
+    <div class="stadium-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all flex flex-col group shadow-sm" data-country="usa">
+      <div class="relative h-48 bg-surface-variant">
+        <img alt="AT&T Stadium, Dallas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/AT%26T_Stadium_2022-08-24.jpg/1280px-AT%26T_Stadium_2022-08-24.jpg"/>
+        <div class="absolute top-4 right-4 bg-wc-green text-white px-sm py-xs rounded-lg font-label-bold text-label-sm uppercase tracking-wider">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md mb-xs">AT&T Stadium, Dallas</h3>
+        <p class="text-on-surface-variant font-body-md mb-md flex items-center gap-xs"><span class="material-symbols-outlined text-wc-red text-[20px]">location_on</span> USA, Dallas</p>
+        <div class="mt-auto flex justify-between items-center border-t border-surface-container-highest pt-md">
+          <div class="flex flex-col"><span class="detail-label text-[10px] text-on-surface-variant tracking-widest">Capacidad</span><span class="font-headline-md text-wc-red">80,000</span></div>
+          <button class="details-btn bg-surface-container-high text-primary font-label-bold text-label-bold px-sm py-base rounded-lg hover:bg-wc-red hover:text-white transition-colors"
+            data-name="AT&T Stadium, Dallas" data-city="USA, Dallas" data-capacity="80,000" data-nation="USA" data-badge-color="bg-wc-green"
+            data-desc="AT&T Stadium es un estadio de múltiples propósitos ubicado en Dallas, Texas. Con una capacidad de 80,000 asientos, es conocido por su ambiente vibrante y su proximidad a la cultura latina de Dallas, lo que lo convierte en un escenario ideal para la Copa del Mundo 2026."
+            data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/AT%26T_Stadium_2022-08-24.jpg/1280px-AT%26T_Stadium_2022-08-24.jpg">DETALLES</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- More venues banner -->
+    <div class="lg:col-span-full py-xl mt-lg bg-primary-container/10 backdrop-blur-sm rounded-2xl border border-primary/20 flex flex-col items-center justify-center text-center">
+      <p class="font-label-bold text-primary mb-lg uppercase tracking-[0.2em] text-label-sm">Y 4 estadios más de clase mundial</p>
+      <div class="flex flex-wrap justify-center gap-md max-w-5xl px-md">
+        
+        <div class="bg-surface-container-lowest px-md py-sm rounded-xl border border-outline-variant shadow-sm hover:border-wc-red transition-all cursor-default hover:scale-105" data-country="usa">Lincoln Financial Field, Philadelphia</div>
+        <div class="bg-surface-container-lowest px-md py-sm rounded-xl border border-outline-variant shadow-sm hover:border-wc-red transition-all cursor-default hover:scale-105" data-country="usa">NRG Stadium, Houston</div>
+        <div class="bg-surface-container-lowest px-md py-sm rounded-xl border border-outline-variant shadow-sm hover:border-wc-red transition-all cursor-default hover:scale-105" data-country="usa">Lumen Field, Seattle</div>
+        <div class="bg-surface-container-lowest px-md py-sm rounded-xl border border-outline-variant shadow-sm hover:border-wc-red transition-all cursor-default hover:scale-105" data-country="usa">Levi's Stadium, San Francisco</div>
+        
+       
+      </div>
+    </div>
+  </div>
+
+  <!-- Swipe hint (mobile only) -->
+  <p class="swipe-hint items-center justify-center gap-1 mt-sm mb-md text-on-surface-variant font-label-sm text-label-sm">
+    <span class="material-symbols-outlined" style="font-size:16px">swipe_right</span> Desliza para ver más estadios
+  </p>
+</main>
+
+<!-- Footer -->
+<footer class="bg-surface-container-highest/50 border-t-2 border-outline-variant flex flex-col md:flex-row justify-between items-center gap-md py-lg px-margin-mobile md:px-margin-desktop w-full mt-xl">
+  <a href="index.html" class="font-headline-md text-headline-md text-on-surface tracking-tighter uppercase hover:text-wc-red transition-colors"></a>
+  <div class="flex flex-wrap justify-center gap-md">
+    <a href="cities.html" class="font-label-bold text-[12px] text-on-surface-variant hover:text-wc-red transition-colors uppercase">Ciudades</a>
+    <a href="map.html" class="font-label-bold text-[12px] text-on-surface-variant hover:text-wc-red transition-colors uppercase">Mapa</a>
+    <a href="schedule.html" class="font-label-bold text-[12px] text-on-surface-variant hover:text-wc-red transition-colors uppercase">Calendario</a>
+                <a href="https://www.instagram.com/21studio.mx?igsh=dWMyZ2V4dzAzd3ly" class="font-body-md text-body-md text-on-surface-variant hover:text-fifa-red transition-colors">21 STUDIO</a>
+
+  </div>
+  <div class="font-label-bold text-[12px] text-primary uppercase"></div>
+</footer>
+
+<script>
+  // Mobile menu
+  const mobileMenu = document.getElementById('mobile-menu');
+  document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+    mobileMenu.classList.remove('hidden');
+    requestAnimationFrame(() => { mobileMenu.style.opacity = '1'; });
+    document.body.style.overflow = 'hidden';
+  });
+  document.getElementById('close-menu').addEventListener('click', () => {
+    mobileMenu.style.opacity = '0';
+    setTimeout(() => { mobileMenu.classList.add('hidden'); }, 300);
+    document.body.style.overflow = '';
+  });
+
+  // Filter chips
+  const chips = document.querySelectorAll('.filter-chip');
+  const cards = document.querySelectorAll('.stadium-card');
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter;
+      chips.forEach(c => {
+        c.classList.remove('bg-wc-red', 'text-white', 'border-wc-red', 'bg-secondary', 'border-secondary', 'bg-wc-green', 'border-wc-green');
+        c.classList.add('bg-surface-container-lowest', 'text-on-surface');
+      });
+      chip.classList.remove('bg-surface-container-lowest', 'text-on-surface');
+      if (filter === 'usa') chip.classList.add('bg-secondary', 'text-white', 'border-secondary');
+      else if (filter === 'mexico') chip.classList.add('bg-wc-green', 'text-white', 'border-wc-green');
+      else if (filter === 'canada') chip.classList.add('bg-wc-red', 'text-white', 'border-wc-red');
+      else chip.classList.add('bg-wc-red', 'text-white', 'border-wc-red');
+
+      cards.forEach(card => {
+        if (filter === 'all' || card.dataset.country === filter) {
+          card.classList.remove('hidden-card');
+        } else {
+          card.classList.add('hidden-card');
+        }
+      });
+    });
+  });
+
+  // Check URL filter param
+  const urlFilter = new URLSearchParams(location.search).get('filter');
+  if (urlFilter) {
+    const matchChip = document.querySelector(`[data-filter="${urlFilter}"]`);
+    if (matchChip) matchChip.click();
+  }
+
+  // Modal
+  const modal = document.getElementById('modal-overlay');
+  document.querySelectorAll('.details-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById('modal-img').src = btn.dataset.img;
+      document.getElementById('modal-img').alt = btn.dataset.name;
+      document.getElementById('modal-name').textContent = btn.dataset.name;
+      document.getElementById('modal-city').querySelector('span').textContent = btn.dataset.city;
+      document.getElementById('modal-capacity').textContent = btn.dataset.capacity;
+      document.getElementById('modal-nation').textContent = btn.dataset.nation;
+      document.getElementById('modal-desc').textContent = btn.dataset.desc;
+      const badge = document.getElementById('modal-badge');
+      badge.className = `absolute bottom-4 left-4 px-sm py-xs rounded-lg font-label-bold text-label-sm uppercase tracking-wider text-white ${btn.dataset.badgeColor}`;
+      badge.textContent = btn.dataset.nation;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Page transitions
+  document.querySelectorAll('a[href]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href && !href.startsWith('#') && !href.startsWith('mailto') && !link.target) {
+        e.preventDefault();
+        document.body.classList.add('fade-out');
+        setTimeout(() => { window.location = href; }, 280);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FIFA World Cup 2026 | Explora el escenario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="dns-prefetch" href="https://raw.githubusercontent.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface-container-low": "#1d1a24",
+          "secondary": "#0041c9",
+          "outline-variant": "#ccc3d8",
+          "primary-fixed": "#e9ddff",
+          "on-primary-fixed": "#23005b",
+          "secondary-fixed": "#dce1ff",
+          "outline": "#7b7487",
+          "on-secondary-fixed-variant": "#0039b3",
+          "error-container": "#ffdad6",
+          "error": "#ba1a1a",
+          "on-primary-fixed-variant": "#5700c9",
+          "on-error": "#ffffff",
+          "tertiary-container": "#005e23",
+          "on-secondary": "#ffffff",
+          "surface-tint": "#6f31e5",
+          "background": "#1d1a24",
+          "on-surface": "#fef7ff",
+          "surface": "#12002b",
+          "surface-container-highest": "#322f39",
+          "on-tertiary": "#ffffff",
+          "surface-bright": "#1d1a24",
+          "on-primary-container": "#ceb8ff",
+          "on-secondary-fixed": "#001551",
+          "on-secondary-container": "#e4e7ff",
+          "secondary-container": "#0356ff",
+          "surface-container": "#231f2e",
+          "on-surface-variant": "#ccc3d8",
+          "on-tertiary-container": "#37df67",
+          "tertiary": "#004417",
+          "on-error-container": "#93000a",
+          "on-tertiary-fixed-variant": "#00531e",
+          "primary": "#d0bcff",
+          "primary-fixed-dim": "#d0bcff",
+          "surface-variant": "#4a4455",
+          "primary-container": "#6118d7",
+          "tertiary-fixed-dim": "#3ce36a",
+          "surface-container-lowest": "#000000",
+          "secondary-fixed-dim": "#b6c4ff",
+          "inverse-primary": "#4700a8",
+          "surface-dim": "#1d1a24",
+          "on-tertiary-fixed": "#002108",
+          "inverse-surface": "#fef7ff",
+          "surface-container-high": "#2b2735",
+          "tertiary-fixed": "#69ff87",
+          "on-background": "#fef7ff",
+          "inverse-on-surface": "#1d1a24",
+          "on-primary": "#ffffff",
+          "fifa-red": "#ee1c25",
+          "fifa-green": "#00a651",
+          "fifa-dark-red": "#7b1113",
+          "fifa-dark-green": "#004417",
+          "fifa-purple": "#4700a8",
+          "fifa-blue": "#0041c9"
+        },
+        borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+        spacing: { "gutter": "24px", "md": "24px", "xl": "80px", "margin-mobile": "16px", "xs": "4px", "lg": "48px", "sm": "12px", "base": "8px", "margin-desktop": "64px" },
+        fontFamily: {
+          "label-sm": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"],
+          "headline-lg-mobile": ["Plus Jakarta Sans"], "display-md": ["Plus Jakarta Sans"],
+          "body-lg": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"],
+          "headline-md": ["Plus Jakarta Sans"], "label-bold": ["Plus Jakarta Sans"],
+          "display-lg": ["Plus Jakarta Sans"]
+        },
+        fontSize: {
+          "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+          "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+          "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+          "display-md": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+          "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+          "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+          "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+          "label-bold": ["14px", {"lineHeight": "20px", "fontWeight": "700"}],
+          "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.04em", "fontWeight": "800"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  
+  .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24 }
+  .hard-shadow-primary { box-shadow: 4px 4px 0 0 #000000 }
+  .hard-shadow-secondary { box-shadow: 4px 4px 0 0 #001551 }
+  .hard-shadow-red { box-shadow: 4px 4px 0 0 #000000 }
+  .hard-shadow-green { box-shadow: 4px 4px 0 0 #000000 }
+  .paper-texture {
+    background-blend-mode: overlay;
+  }
+  body { animation: bodyFadeIn 0.4s ease forwards; }
+  body.fade-out { opacity: 0 !important; transition: opacity 0.25s ease !important; animation: none; }
+  @keyframes bodyFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden paper-texture">
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="fixed inset-0 bg-surface z-[100] flex flex-col items-center justify-center gap-xl hidden" style="opacity:0;transition:opacity 0.3s">
+  <button id="close-menu" class="absolute top-6 right-6 text-on-surface">
+    <span class="material-symbols-outlined text-4xl">close</span>
+  </button>
+  <a href="index.html" class="font-label-bold text-label-bold text-fifa-red border-b-4 border-fifa-red pb-1 text-2xl">INICIO</a>
+  <a href="stadiums.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-fifa-red transition-colors">ESTADIOS</a>
+  <a href="cities.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-fifa-green transition-colors">CIUDADES</a>
+  <a href="map.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-fifa-red transition-colors">MAPA</a>
+  <a href="schedule.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-fifa-red transition-colors">CALENDARIO</a>
+  <a href="map.html" class="bg-fifa-red text-on-primary font-label-bold text-label-bold px-md py-sm rounded-lg mt-md">EXPLORAR SEDES</a>
+</div>
+
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-surface/90 backdrop-blur-md border-b-4 border-fifa-red">
+  <nav class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4">
+    <a href="index.html" class="font-headline-md text-headline-md text-primary tracking-tight hover:text-fifa-red transition-colors">FIFA WORLD CUP 26</a>
+    <div class="hidden md:flex gap-md items-center">
+      <a href="stadiums.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-fifa-red transition-colors">ESTADIOS</a>
+      <a href="cities.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-fifa-green transition-colors">CIUDADES</a>
+      <a href="map.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-fifa-red transition-colors">MAPA</a>
+      <a href="schedule.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-fifa-red transition-colors">CALENDARIO</a>
+    </div>
+    <div class="flex items-center gap-sm">
+      <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center text-on-surface hover:text-fifa-red transition-colors">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <a href="map.html" class="hidden md:block bg-fifa-red text-on-primary font-label-bold text-label-bold px-md py-sm rounded-lg hard-shadow-red hover:scale-95 transition-all active:scale-90">EXPLORAR LUGARES</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- Hero Section -->
+  <section class="relative min-h-[90vh] flex flex-col items-center justify-center text-center px-margin-mobile md:px-margin-desktop overflow-hidden">
+    <div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
+      <video class="w-full h-full object-cover grayscale brightness-150" autoplay muted loop playsinline preload="none">
+        <source src="video2.mp4" type="video/mp4"/>
+      </video>
+    </div>
+    <div class="absolute top-10 left-[-10%] w-64 h-64 bg-fifa-blue/30 rounded-full mix-blend-screen opacity-40 z-0 blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-10 right-[-5%] w-80 h-80 bg-fifa-purple/30 rounded-full mix-blend-screen opacity-30 z-0 blur-3xl"></div>
+    <div class="relative z-10 max-w-5xl space-y-md reveal">
+      <p class="font-label-bold text-label-bold text-fifa-red uppercase tracking-[0.3em] mb-md">USA · CANADÁ · MÉXICO · 2026</p>
+      <h1 class="font-display-lg text-display-md md:text-display-lg text-on-surface leading-none uppercase">
+        EXPLORA EL <span class="text-fifa-red">ESCENARIO</span>
+      </h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+        Descubre las 16 ciudades y estadios emblemáticos de Estados Unidos, Canadá y México en una experiencia inmersiva.
+      </p>
+      <div class="pt-md flex flex-wrap gap-md justify-center">
+        <a href="map.html" class="group relative inline-flex items-center gap-sm bg-fifa-green text-on-tertiary font-headline-md text-headline-md px-lg py-md rounded-xl hard-shadow-green hover:translate-y-[-2px] transition-all">
+          ABRIR MAPA INTERACTIVO
+          <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">map</span>
+        </a>
+        <a href="stadiums.html" class="group relative inline-flex items-center gap-sm border-2 border-fifa-red text-fifa-red font-headline-md text-headline-md px-lg py-md rounded-xl hover:bg-fifa-red hover:text-on-primary transition-all">
+          VER ESTADIOS
+          <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">stadium</span>
+        </a>
+      </div>
+    </div>
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce opacity-60">
+      <span class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-widest">Bajar</span>
+      <span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+    </div>
+  </section>
+
+  <!-- Host Cities Highlights Section -->
+  <section class="py-xl px-margin-mobile md:px-margin-desktop bg-surface-container-low relative">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-lg gap-md reveal">
+      <div>
+        <h2 class="font-headline-lg text-headline-lg md:text-headline-lg text-on-surface uppercase leading-tight">
+          Ciudades Anfitrionas <br/><span class="text-fifa-green">Destacadas</span>
+        </h2>
+        <div class="w-24 h-2 bg-fifa-red mt-sm"></div>
+      </div>
+      <p class="font-body-md text-body-md text-on-surface-variant max-w-md">
+        Desde las luces del neón de Nueva York hasta el calor histórico de la Ciudad de México y la majestuosidad costera de Vancouver.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+      <!-- USA Card -->
+      <div class="group bg-surface-container-high border-2 border-outline-variant/20 p-sm rounded-xl hover:border-fifa-red transition-all flex flex-col h-full relative overflow-hidden reveal">
+        <div class="absolute top-0 left-0 w-2 h-full bg-fifa-red"></div>
+        <div class="aspect-video overflow-hidden rounded-lg mb-md">
+          <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://raw.githubusercontent.com/jaredgg17/audio/main/ChatGPT%20Image%2016%20may%202026%2C%2008_01_03%20p.m..png" alt="MetLife Stadium" loading="lazy"/>
+        </div>
+        <div class="px-sm flex flex-col flex-grow">
+          <div class="flex justify-between items-start mb-xs">
+            <span class="font-label-bold text-label-bold text-fifa-red uppercase tracking-widest">USA</span>
+            <span class="bg-primary-container text-on-primary-container px-2 py-0.5 rounded text-[10px] font-bold">11 ESTADIOS</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md text-on-surface mb-sm uppercase">Metlife Stadium</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-md flex-grow">Experimente la grandeza de East Rutherford, donde la ingeniería moderna se encuentra con la energía eléctrica del horizonte de Nueva York.</p>
+          <a href="stadiums.html?filter=usa" class="flex items-center gap-xs font-label-bold text-label-bold text-fifa-red group-hover:underline decoration-2 underline-offset-4">
+            VER ESTADIOS <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+      <!-- Canada Card -->
+      <div class="group bg-surface-container-high border-2 border-outline-variant/20 p-sm rounded-xl hover:border-secondary transition-all flex flex-col h-full relative overflow-hidden reveal">
+        <div class="absolute top-0 left-0 w-2 h-full bg-secondary"></div>
+        <div class="aspect-video overflow-hidden rounded-lg mb-md">
+          <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://raw.githubusercontent.com/jaredgg17/audio/main/ChatGPT%20Image%2016%20may%202026%2C%2008_06_52%20p.m..png" alt="BC Place" loading="lazy"/>
+        </div>
+        <div class="px-sm flex flex-col flex-grow">
+          <div class="flex justify-between items-start mb-xs">
+            <span class="font-label-bold text-label-bold text-secondary uppercase tracking-widest">Canadá</span>
+            <span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded text-[10px] font-bold">2 ESTADIOS</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md text-on-surface mb-sm uppercase">BC Place</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-md flex-grow">Una obra maestra costera en Vancouver que destaca por tener una de las mayores cubiertas retráctiles soportadas por cables en el mundo.</p>
+          <a href="cities.html?filter=canada" class="flex items-center gap-xs font-label-bold text-label-bold text-secondary group-hover:underline decoration-2 underline-offset-4">
+            VER CIUDADES <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+      <!-- Mexico Card -->
+      <div class="group bg-surface-container-high border-2 border-outline-variant/20 p-sm rounded-xl hover:border-fifa-green transition-all flex flex-col h-full relative overflow-hidden reveal">
+        <div class="absolute top-0 left-0 w-2 h-full bg-fifa-green"></div>
+        <div class="aspect-video overflow-hidden rounded-lg mb-md">
+          <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://raw.githubusercontent.com/jaredgg17/audio/main/ChatGPT%20Image%2016%20may%202026%2C%2008_13_07%20p.m..png" alt="Estadio Azteca" loading="lazy"/>
+        </div>
+        <div class="px-sm flex flex-col flex-grow">
+          <div class="flex justify-between items-start mb-xs">
+            <span class="font-label-bold text-label-bold text-fifa-green uppercase tracking-widest">Mexico</span>
+            <span class="bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded text-[10px] font-bold">3 ESTADIOS</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md text-on-surface mb-sm uppercase">Estadio Azteca</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-md flex-grow">El legendario catedral del fútbol mundial. Levantado en la Ciudad de México, sigue siendo el escenario definitivo para la grandeza.</p>
+          <a href="stadiums.html?filter=mexico" class="flex items-center gap-xs font-label-bold text-label-bold text-fifa-green group-hover:underline decoration-2 underline-offset-4">
+            VER ESTADIOS <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Bento Section -->
+  <section class="py-xl px-margin-mobile md:px-margin-desktop overflow-hidden bg-surface">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-md reveal">
+      <div class="md:col-span-2 bg-primary-container text-on-primary p-lg rounded-xl hard-shadow-primary flex flex-col justify-center border-2 border-primary/20">
+        <div class="font-display-lg text-display-md md:text-display-lg leading-none mb-xs">104</div>
+        <div class="font-headline-md text-headline-md uppercase tracking-tight">PARTIDOS</div>
+        <p class="font-body-md mt-sm opacity-90">El torneo más grande en la historia de la Copa del Mundo de la FIFA a través de tres naciones.</p>
+      </div>
+      <div class="bg-fifa-red text-on-primary p-lg rounded-xl hard-shadow-red flex flex-col items-center justify-center text-center">
+        <div class="font-display-lg text-display-md leading-none mb-xs">48</div>
+        <div class="font-label-bold text-label-bold uppercase tracking-widest">EQUIPOS</div>
+      </div>
+      <div class="bg-fifa-green text-on-tertiary p-lg rounded-xl hard-shadow-green flex flex-col items-center justify-center text-center">
+        <div class="font-display-lg text-display-md leading-none mb-xs">16</div>
+        <div class="font-label-bold text-label-bold uppercase tracking-widest">CIUDADES ANFITRIONAS</div>
+      </div>
+    </div>
+    <!-- Quick Links -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-md mt-md reveal">
+      <a href="stadiums.html" class="bg-surface-container p-md rounded-xl border border-outline-variant/30 flex flex-col items-center gap-sm hover:border-fifa-red hover:bg-surface-container-high transition-all group text-center">
+        <span class="material-symbols-outlined text-fifa-red text-4xl group-hover:scale-110 transition-transform">stadium</span>
+        <span class="font-label-bold text-label-bold text-on-surface uppercase">16 Estadios</span>
+      </a>
+      <a href="cities.html" class="bg-surface-container p-md rounded-xl border border-outline-variant/30 flex flex-col items-center gap-sm hover:border-fifa-green hover:bg-surface-container-high transition-all group text-center">
+        <span class="material-symbols-outlined text-fifa-green text-4xl group-hover:scale-110 transition-transform">location_city</span>
+        <span class="font-label-bold text-label-bold text-on-surface uppercase">16 Ciudades</span>
+      </a>
+      <a href="map.html" class="bg-surface-container p-md rounded-xl border border-outline-variant/30 flex flex-col items-center gap-sm hover:border-primary hover:bg-surface-container-high transition-all group text-center">
+        <span class="material-symbols-outlined text-primary text-4xl group-hover:scale-110 transition-transform">map</span>
+        <span class="font-label-bold text-label-bold text-on-surface uppercase">Mapa Interactivo</span>
+      </a>
+      <a href="schedule.html" class="bg-surface-container p-md rounded-xl border border-outline-variant/30 flex flex-col items-center gap-sm hover:border-secondary hover:bg-surface-container-high transition-all group text-center">
+        <span class="material-symbols-outlined text-secondary text-4xl group-hover:scale-110 transition-transform">calendar_month</span>
+        <span class="font-label-bold text-label-bold text-on-surface uppercase">Calendario</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-surface-container-high border-t-2 border-outline-variant/20">
+  <div class="flex flex-col md:flex-row justify-center items-center gap-md py-lg px-margin-mobile md:px-margin-desktop w-full">
+    <div class="flex flex-col gap-xs items-center md:items-start">
+      <a href="index.html" class="font-headline-lg text-headline-lg text-primary  hover:text-fifa-red transition-colors"></a>
+      <div class="font-body-md text-body-md text-on-surface-variant"></div>
+    </div>
+    <div class="flex flex-wrap justify-center gap-md">
+      <a href="stadiums.html" class="font-body-md text-body-md text-on-surface-variant hover:text-fifa-red transition-colors">Estadios</a>
+      <a href="cities.html" class="font-body-md text-body-md text-on-surface-variant hover:text-fifa-red transition-colors">Ciudades</a>
+      <a href="map.html" class="font-body-md text-body-md text-on-surface-variant hover:text-fifa-red transition-colors">Mapa</a>
+      <a href="schedule.html" class="font-body-md text-body-md text-on-surface-variant hover:text-fifa-red transition-colors">Calendario</a>
+            <a href="https://www.instagram.com/21studio.mx?igsh=dWMyZ2V4dzAzd3ly" class="font-body-md text-body-md text-on-surface-variant hover:text-fifa-red transition-colors">21 STUDIO</a>
+
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const mobileMenu = document.getElementById('mobile-menu');
+  const openBtn = document.getElementById('mobile-menu-btn');
+  const closeBtn = document.getElementById('close-menu');
+
+  openBtn.addEventListener('click', () => {
+    mobileMenu.classList.remove('hidden');
+    requestAnimationFrame(() => { mobileMenu.style.opacity = '1'; });
+    document.body.style.overflow = 'hidden';
+  });
+  closeBtn.addEventListener('click', closeMenu);
+  function closeMenu() {
+    mobileMenu.style.opacity = '0';
+    setTimeout(() => { mobileMenu.classList.add('hidden'); }, 300);
+    document.body.style.overflow = '';
+  }
+
+  // Page transition on nav links
+  document.querySelectorAll('a[href]').forEach(link => {
+    if (!link.href.startsWith('http') || link.href.includes(location.hostname)) {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('#') && !href.startsWith('mailto') && !link.target) {
+          e.preventDefault();
+          document.body.classList.add('fade-out');
+          setTimeout(() => { window.location = href; }, 280);
+        }
+      });
+    }
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

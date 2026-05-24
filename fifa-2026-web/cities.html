@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FIFA World Cup 2026 | Ciudades Anfitrionas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="dns-prefetch" href="https://upload.wikimedia.org"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface-container-low": "#f9f1ff","secondary": "#0041c9","outline-variant": "#ccc3d8",
+          "primary-fixed": "#e9ddff","on-primary-fixed": "#23005b","secondary-fixed": "#dce1ff",
+          "outline": "#7b7487","error-container": "#ffdad6","error": "#ba1a1a","on-error": "#ffffff",
+          "tertiary-container": "#005e23","on-secondary": "#ffffff","surface-tint": "#6f31e5",
+          "background": "#fef7ff","on-surface": "#1d1a24","surface": "#fef7ff",
+          "surface-container-highest": "#e7e0ee","on-tertiary": "#ffffff","surface-bright": "#fef7ff",
+          "on-primary-container": "#ceb8ff","on-secondary-fixed": "#001551",
+          "on-secondary-container": "#e4e7ff","secondary-container": "#0356ff",
+          "surface-container": "#f3ebfa","on-surface-variant": "#4a4455",
+          "on-tertiary-container": "#37df67","tertiary": "#004417","on-error-container": "#93000a",
+          "primary": "#4700a8","primary-fixed-dim": "#d0bcff","surface-variant": "#e7e0ee",
+          "primary-container": "#6118d7","surface-container-lowest": "#ffffff",
+          "inverse-surface": "#322f39","surface-container-high": "#ede5f4",
+          "on-background": "#1d1a24","inverse-on-surface": "#f6eefd","on-primary": "#ffffff",
+          "wc-red": "#ED1C24","wc-green": "#00A651","wc-dark-green": "#004417"
+        },
+        borderRadius: {"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},
+        spacing: {"gutter":"24px","md":"24px","xl":"80px","margin-mobile":"16px","xs":"4px","lg":"48px","sm":"12px","base":"8px","margin-desktop":"64px"},
+        fontFamily: {"label-sm":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Plus Jakarta Sans"],"display-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"label-bold":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"]},
+        fontSize: {
+          "label-sm":["12px",{"lineHeight":"16px","fontWeight":"500"}],
+          "headline-lg":["32px",{"lineHeight":"40px","fontWeight":"700"}],
+          "headline-lg-mobile":["28px",{"lineHeight":"36px","fontWeight":"700"}],
+          "display-md":["48px",{"lineHeight":"56px","letterSpacing":"-0.03em","fontWeight":"800"}],
+          "body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],
+          "body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],
+          "headline-md":["24px",{"lineHeight":"32px","fontWeight":"700"}],
+          "label-bold":["14px",{"lineHeight":"20px","fontWeight":"700"}],
+          "display-lg":["72px",{"lineHeight":"80px","letterSpacing":"-0.04em","fontWeight":"800"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24 }
+  .vibrant-pattern {
+    background-image: radial-gradient(circle at 2px 2px, rgba(71,0,168,0.05) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+  .hard-shadow-primary { box-shadow: 6px 6px 0 0 #4700a8 }
+  .hard-shadow-secondary { box-shadow: 6px 6px 0 0 #0041c9 }
+  .hard-shadow-tertiary { box-shadow: 6px 6px 0 0 #00A651 }
+  .hard-shadow-red { box-shadow: 6px 6px 0 0 #ED1C24 }
+  .mesh-gradient {
+    background: radial-gradient(at 0% 0%, rgba(71,0,168,0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(0,65,201,0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(0,166,81,0.05) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(237,28,36,0.05) 0px, transparent 50%);
+  }
+  body { animation: bodyFadeIn 0.4s ease forwards; }
+  @keyframes bodyFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .fade-out { opacity:0 !important; transition: opacity 0.25s ease !important; animation: none; }
+  .city-card { transition: all 0.35s ease; }
+  .city-card.hidden-card { display: none !important; }
+  #count-display { transition: all 0.2s ease; }
+
+  /* Mobile horizontal carousel */
+  @media (max-width: 767px) {
+    #cities-grid {
+      display: flex !important;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 12px;
+      gap: 16px;
+    }
+    #cities-grid::-webkit-scrollbar { display: none; }
+    #cities-grid > .city-card {
+      flex: 0 0 290px !important;
+      scroll-snap-align: start;
+      min-height: 0;
+    }
+  }
+  .swipe-hint { display: none; }
+  @media (max-width: 767px) { .swipe-hint { display: flex; } }
+</style>
+</head>
+<body class="bg-surface vibrant-pattern mesh-gradient min-h-screen font-body-md text-on-background">
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="fixed inset-0 bg-surface z-[100] flex flex-col items-center justify-center gap-xl hidden" style="opacity:0;transition:opacity 0.3s">
+  <button id="close-menu" class="absolute top-6 right-6 text-on-surface"><span class="material-symbols-outlined text-4xl">close</span></button>
+  <a href="index.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-wc-red transition-colors">INICIO</a>
+  <a href="stadiums.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-wc-red transition-colors">ESTADIOS</a>
+  <a href="cities.html" class="font-label-bold text-2xl text-wc-red border-b-4 border-wc-red pb-1">CIUDADES</a>
+  <a href="map.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-wc-red transition-colors">MAPA</a>
+  <a href="schedule.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-wc-red transition-colors">CALENDARIO</a>
+</div>
+
+<!-- Nav -->
+<nav class="bg-surface-container-lowest/90 backdrop-blur-md border-b-4 border-wc-red sticky top-0 z-50 shadow-[0_4px_0_0_rgba(237,28,36,0.1)] flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4">
+  <a href="index.html" class="font-headline-md text-headline-md text-primary tracking-tight uppercase hover:text-wc-red transition-colors">FIFA WORLD CUP 26</a>
+  <div class="hidden md:flex gap-lg items-center">
+    <a href="stadiums.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-wc-red transition-colors">ESTADIOS</a>
+    <a href="cities.html" class="font-label-bold text-label-bold text-wc-red border-b-4 border-wc-red pb-1">CIUDADES</a>
+    <a href="map.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-wc-red transition-colors">MAPA</a>
+    <a href="schedule.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-wc-red transition-colors">CALENDARIO</a>
+  </div>
+  <div class="flex items-center gap-sm">
+    <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center text-on-surface hover:text-wc-red transition-colors">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <a href="map.html" class="hidden md:block bg-wc-red text-on-primary font-label-bold text-label-bold px-md py-sm rounded shadow-[0_4px_0_0_rgba(150,0,0,1)] active:scale-95 transition-all uppercase">EXPLORAR</a>
+  </div>
+</nav>
+
+
+
+<main class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop py-xl">
+  
+  
+  <!-- Hero -->
+  <header class="mb-xl relative">
+    <div class="absolute -top-10 -left-10 w-48 h-48 bg-primary/10 rounded-full blur-3xl -z-10"></div>
+    <div class="absolute -bottom-20 -right-10 w-64 h-64 bg-secondary/10 rounded-full blur-3xl -z-10"></div>
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-md border-l-8 border-wc-red pl-md">
+      <div>
+        <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface uppercase mb-xs">Ciudades Anfitrionas</h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Descubre las 16 vibrantes metrópolis a través de América del Norte que darán la bienvenida al mundo en 2026. Desde puertos costeros históricos hasta cimas de altitud elevada.</p>
+      </div>
+      <!-- Filter Chips -->
+      <div class="flex flex-wrap gap-sm" id="filter-chips">
+        <button data-filter="all" class="filter-chip active-chip bg-wc-red text-on-primary font-label-bold text-label-bold px-md py-xs rounded-full border-2 border-wc-red uppercase">Todas las Naciones</button>
+        <button data-filter="usa" class="filter-chip bg-surface-container-high text-on-surface-variant font-label-bold text-label-bold px-md py-xs rounded-full border-2 border-outline-variant hover:border-secondary transition-colors uppercase">USA</button>
+        <button data-filter="mexico" class="filter-chip bg-surface-container-high text-on-surface-variant font-label-bold text-label-bold px-md py-xs rounded-full border-2 border-outline-variant hover:border-wc-green transition-colors uppercase">MÉXICO</button>
+        <button data-filter="canada" class="filter-chip bg-surface-container-high text-on-surface-variant font-label-bold text-label-bold px-md py-xs rounded-full border-2 border-outline-variant hover:border-wc-red transition-colors uppercase">CANADÁ</button>
+      </div>
+    </div>
+    <p id="count-display" class="font-label-sm text-on-surface-variant mt-md pl-md">Mostrando <strong id="count-num">16</strong> ciudades</p>
+  </header>
+
+  <!-- City Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md" id="cities-grid">
+
+    <!-- Mexico City -->
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-tertiary flex flex-col group" data-country="mexico">
+      <div class="relative h-64 overflow-hidden">
+        <img alt="Mexico City" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Paseo_de_la_Reforma_Skyline_Mexico_City.jpg/1280px-Paseo_de_la_Reforma_Skyline_Mexico_City.jpg"/>
+        <div class="absolute top-4 left-4 bg-wc-green text-on-tertiary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">MÉXICO</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">MÉXICO CITY</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant flex-grow">Casa del legendario Estadio Azteca, Ciudad de México es el corazón del patrimonio global del fútbol, ofreciendo una experiencia de alta altitud y energía.</p>
+        <div class="mt-md flex items-center justify-between">
+          <div class="flex items-center text-wc-green font-label-bold text-label-bold group-hover:translate-x-2 transition-transform uppercase">
+            
+          </div>
+          <a href="map.html" class="text-on-surface-variant hover:text-wc-green transition-colors"><span class="material-symbols-outlined">map</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- New York / New Jersey -->
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-red flex flex-col group lg:col-span-2" data-country="usa">
+      <div class="flex flex-col md:flex-row h-full">
+        <div class="relative md:w-1/2 h-64 md:h-full overflow-hidden">
+          <img alt="New York City skyline" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/New_York_City_skyline.jpg/1280px-New_York_City_skyline.jpg"/>
+          <div class="absolute top-4 left-4 bg-secondary text-on-secondary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">USA</div>
+        </div>
+        <div class="p-md md:w-1/2 flex flex-col justify-center">
+          <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">New York / New Jersey</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-md">Lugar de la final. Un lugar global donde cada partido se siente como un juego en casa para ambos lados, situado frente a la skyline más icónica del mundo.</p>
+          <div class="flex gap-sm flex-wrap">
+            <span class="bg-wc-red text-on-primary px-sm py-1 rounded-full text-[12px] font-bold uppercase">LUGAR DE LA FINAL</span>
+            <span class="bg-surface-container-highest text-on-surface-variant px-sm py-1 rounded-full text-[12px] font-bold uppercase">8 PARTIDOS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toronto -->
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-red flex flex-col group" data-country="canada">
+      <div class="relative h-64 overflow-hidden">
+        <img alt="Toronto skyline" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Skyline_Toronto.JPG/1280px-Skyline_Toronto.JPG"/>
+        <div class="absolute top-4 left-4 bg-wc-red text-on-primary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">CANADA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">TORONTO</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant flex-grow">Capital del fútbol de Canadá. Un centro urbano diverso donde el juego del mundo encuentra un hogar apasionado y multicultural en el BMO Field.</p>
+        <div class="mt-md flex items-center text-wc-red font-label-bold text-label-bold group-hover:translate-x-2 transition-transform uppercase">
+        </div>
+      </div>
+    </div>
+
+    <!-- Los Angeles -->
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-secondary flex flex-col group" data-country="usa">
+      <div class="relative h-64 overflow-hidden">
+        <img alt="Los Angeles skyline" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Downtown_Los_Angeles_Skyscrapers.JPG/1280px-Downtown_Los_Angeles_Skyscrapers.JPG"/>
+        <div class="absolute top-4 left-4 bg-secondary text-on-secondary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">LOS ANGELES</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant flex-grow">Donde el glamour se encuentra con el deporte. El SoFi Stadium ofrece un escenario futurista para el hermoso juego en la Ciudad de los Ángeles.</p>
+        <div class="mt-md flex items-center text-secondary font-label-bold text-label-bold group-hover:translate-x-2 transition-transform uppercase">
+        </div>
+      </div>
+    </div>
+
+    <!-- Vancouver -->
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-red flex flex-col group" data-country="canada">
+      <div class="relative h-64 overflow-hidden">
+        <img alt="Vancouver skyline and mountains" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Vancouver_Skyline_and_Mountains.jpg/1280px-Vancouver_Skyline_and_Mountains.jpg"/>
+        <div class="absolute top-4 left-4 bg-wc-red text-on-primary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">CANADA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">VANCOUVER</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant flex-grow">Impresionantes paisajes montañosos y una cultura futbolística arraigada hacen del BC Place un destino de primer nivel para los fanáticos en 2026.</p>
+        <div class="mt-md flex items-center text-wc-red font-label-bold text-label-bold group-hover:translate-x-2 transition-transform uppercase">
+        </div>
+      </div>
+    </div>
+
+    <!-- Monterrey -->
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-tertiary flex flex-col group" data-country="mexico">
+      <div class="relative h-64 overflow-hidden">
+        <img alt="Monterrey desde el cerro de la silla" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Monterrey_desde_el_cerro_de_la_silla.JPG/1280px-Monterrey_desde_el_cerro_de_la_silla.JPG"/>
+        <div class="absolute top-4 left-4 bg-wc-green text-on-tertiary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">MEXICO</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">MONTERREY</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant flex-grow">Enclavado entre montañas, el Estadio BBVA de Monterrey ofrece una de las experiencias de día de partido más pintorescas del mundo.</p>
+        <div class="mt-md flex items-center text-wc-green font-label-bold text-label-bold group-hover:translate-x-2 transition-transform uppercase">
+        </div>
+      </div>
+    </div>
+
+    <!-- Miami -->
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-secondary flex flex-col group" data-country="usa">
+      <div class="relative h-64 overflow-hidden">
+        <img alt="Miami skyline at night over Biscayne Bay" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Downtown_Miami%2C_Florida_skyline_viewed_at_night_over_the_Biscayne_Bay.jpg/1280px-Downtown_Miami%2C_Florida_skyline_viewed_at_night_over_the_Biscayne_Bay.jpg"/>
+        <div class="absolute top-4 left-4 bg-secondary text-on-secondary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">MIAMI</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant flex-grow">La puerta de entrada internacional. El Hard Rock Stadium de Miami será un centro de vibrante celebración futbolística con sabor latino.</p>
+        <div class="mt-md flex items-center text-secondary font-label-bold text-label-bold group-hover:translate-x-2 transition-transform uppercase">
+        </div>
+      </div>
+    </div>
+
+    <!-- Guadalajara -->
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-tertiary flex flex-col group" data-country="mexico">
+      <div class="relative h-64 overflow-hidden">
+        <img alt="Guadalajara centro histórico" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Centro_de_Guadalajara%2C_capital_de_Jalisco.JPG/1280px-Centro_de_Guadalajara%2C_capital_de_Jalisco.JPG"/>
+        <div class="absolute top-4 left-4 bg-wc-green text-on-tertiary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">MEXICO</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">GUADALAJARA</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant flex-grow">La segunda ciudad de México, rica en cultura mariachi y pasión futbolística. El Estadio Akron albergará varios partidos de fase de grupos en 2026.</p>
+        <div class="mt-md flex items-center text-wc-green font-label-bold text-label-bold group-hover:translate-x-2 transition-transform uppercase">
+        </div>
+      </div>
+    </div>
+
+    <!-- Atlanta, Dallas, Houston, Kansas City, Philadelphia, Boston, Seattle, San Francisco -->
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-secondary flex flex-col group" data-country="usa">
+      <div class="relative h-64 overflow-hidden">
+        <img alt="Atlanta Georgia skyline" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Atlanta%2C_Georgia_Skyline.jpg/1280px-Atlanta%2C_Georgia_Skyline.jpg"/>
+        <div class="absolute top-4 left-4 bg-secondary text-on-secondary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">ATLANTA</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant flex-grow">La capital cultural del sur de Estados Unidos. El icónico techo retráctil del Mercedes-Benz Stadium cobijará a los fanáticos en este eléctrico recinto.</p>
+        <div class="mt-md flex items-center text-secondary font-label-bold text-label-bold group-hover:translate-x-2 transition-transform uppercase">
+        </div>
+      </div>
+    </div>
+
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-secondary flex flex-col group" data-country="usa">
+      <div class="relative h-64 overflow-hidden">
+        <img alt="Dallas Texas skyline at night" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Dallas_Texas_Skyline_bei_Nacht.jpg/1280px-Dallas_Texas_Skyline_bei_Nacht.jpg"/>
+        <div class="absolute top-4 left-4 bg-secondary text-on-secondary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">DALLAS</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant flex-grow">Todo es más grande en Texas. El AT&T Stadium en Arlington presume de una gigantesca pantalla de video y capacidad para más de 100,000 aficionados.</p>
+        <div class="mt-md flex items-center text-secondary font-label-bold text-label-bold group-hover:translate-x-2 transition-transform uppercase">
+        </div>
+      </div>
+    </div>
+
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-secondary flex flex-col group" data-country="usa">
+      <div class="relative h-64 overflow-hidden">
+        <img alt="Houston Texas downtown skyline" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Downtown_Houston%2C_TX_Skyline_-_2018.jpg/1280px-Downtown_Houston%2C_TX_Skyline_-_2018.jpg"/>
+        <div class="absolute top-4 left-4 bg-secondary text-on-secondary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">HOUSTON</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant flex-grow">Un crisol de culturas y una ciudad que vive y respira el deporte. El NRG Stadium está listo para albergar a los mejores deportistas del mundo.</p>
+        <div class="mt-md flex items-center text-secondary font-label-bold text-label-bold group-hover:translate-x-2 transition-transform uppercase">
+        </div>
+      </div>
+    </div>
+
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-secondary flex flex-col group" data-country="usa">
+      <div class="relative h-64 overflow-hidden">
+        <img alt="Kansas City downtown skyline" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Downtown_Kansas_City_from_Liberty_Memorial_Cropped.jpg/1280px-Downtown_Kansas_City_from_Liberty_Memorial_Cropped.jpg"/>
+        <div class="absolute top-4 left-4 bg-secondary text-on-secondary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">KANSAS CITY</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant flex-grow">Reconocida por su legendaria pasión deportiva. El Arrowhead Stadium se clasifica habitualmente como uno de los recintos más ruidosos del mundo.</p>
+        <div class="mt-md flex items-center text-secondary font-label-bold text-label-bold group-hover:translate-x-2 transition-transform uppercase">
+        </div>
+      </div>
+    </div>
+
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-secondary flex flex-col group" data-country="usa">
+      <div class="relative h-64 overflow-hidden">
+        <img alt="Philadelphia night skyline" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Philadelphia_Night_Skyline.jpg/1280px-Philadelphia_Night_Skyline.jpg"/>
+        <div class="absolute top-4 left-4 bg-secondary text-on-secondary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">PHILADELPHIA</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant flex-grow">La ciudad del amor fraternal trae su afición famosamente apasionada. El Lincoln Financial Field será uno de los recintos más ruidosos de 2026.</p>
+        <div class="mt-md flex items-center text-secondary font-label-bold text-label-bold group-hover:translate-x-2 transition-transform uppercase">
+        </div>
+      </div>
+    </div>
+
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-secondary flex flex-col group" data-country="usa">
+      <div class="relative h-64 overflow-hidden">
+        <img alt="Boston skyline with Prudential Tower" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Boston_Skyline_with_Prudential_Tower.JPG/1280px-Boston_Skyline_with_Prudential_Tower.JPG"/>
+        <div class="absolute top-4 left-4 bg-secondary text-on-secondary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">BOSTON</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant flex-grow">Una de las ciudades más históricas de América con una profunda tradición futbolística. El Gillette Stadium en Foxboro da la bienvenida a la comunidad global del fútbol.</p>
+        <div class="mt-md flex items-center text-secondary font-label-bold text-label-bold group-hover:translate-x-2 transition-transform uppercase">
+        </div>
+      </div>
+    </div>
+
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-secondary flex flex-col group" data-country="usa">
+      <div class="relative h-64 overflow-hidden">
+        <img alt="Seattle skyline from Kerry Park" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Seattle_Kerry_Park_Skyline.jpg/1280px-Seattle_Kerry_Park_Skyline.jpg"/>
+        <div class="absolute top-4 left-4 bg-secondary text-on-secondary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">SEATTLE</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant flex-grow">Sede de una de las culturas futbolísticas más fuertes de EE.UU. El Lumen Field y el impresionante paisaje del Noroeste Pacífico esperan al mundo.</p>
+        <div class="mt-md flex items-center text-secondary font-label-bold text-label-bold group-hover:translate-x-2 transition-transform uppercase">
+        </div>
+      </div>
+    </div>
+
+    <div class="city-card bg-surface-container-lowest border-2 border-outline-variant rounded-xl overflow-hidden hard-shadow-secondary flex flex-col group" data-country="usa">
+      <div class="relative h-64 overflow-hidden">
+        <img alt="Golden Gate Bridge and San Francisco skyline" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Golden_Gate_Bridge_and_San_Francisco_skyline_from_Hawk_Hill_at_Blue_Hour_dllu.jpg/1280px-Golden_Gate_Bridge_and_San_Francisco_skyline_from_Hawk_Hill_at_Blue_Hour_dllu.jpg"/>
+        <div class="absolute top-4 left-4 bg-secondary text-on-secondary font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase">USA</div>
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs uppercase">SAN FRANCISCO</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant flex-grow">El Levi's Stadium del Área de la Bahía combina la innovación de Silicon Valley con instalaciones de clase mundial, con vistas al Valle de Santa Clara.</p>
+        <div class="mt-md flex items-center text-secondary font-label-bold text-label-bold group-hover:translate-x-2 transition-transform uppercase">
+        </div>
+      </div>
+    </div>
+
+    <!-- FIFA Trophy 3D -->
+    <div class="city-card xl:col-span-3 bg-gradient-to-b from-[#1a0040] to-[#0d0020] border-2 border-primary/40 rounded-xl overflow-hidden flex flex-col xl:flex-row" style="box-shadow: 6px 6px 0 0 #d4af37;" data-country="usa">
+      <div class="relative h-64 xl:h-auto xl:flex-1 overflow-hidden" id="trophy-container">
+        <canvas id="trophy-canvas" style="display:block;width:90%;height:90%; top:auto;"></canvas>
+        <div id="trophy-hit" style="position:absolute;inset:0;cursor:grab;" title="Arrastra para girar la copa"></div>
+        <div class="absolute top-4 left-4 font-label-bold text-label-bold px-sm py-1 rounded shadow-md uppercase z-10" style="background:#d4af37;color:#1a0040;">TROFEO</div>
+      </div>
+      <div class="p-md xl:p-lg flex flex-col justify-center xl:w-72 shrink-0">
+        <h3 class="font-headline-md xl:font-display-md text-headline-md xl:text-display-md mb-xs xl:mb-md uppercase leading-tight" style="color:#d4af37;">Copa FIFA 2026</h3>
+        <p class="font-body-md xl:font-body-lg text-body-md xl:text-body-lg" style="color:rgba(255,255,255,0.7);">El trofeo más codiciado del fútbol. El campeón del FIFA World Cup 2026 levantará esta copa frente al mundo entero.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Swipe hint (mobile only) -->
+  <p class="swipe-hint items-center justify-center gap-1 mt-sm mb-md text-on-surface-variant font-label-sm text-label-sm">
+    <span class="material-symbols-outlined" style="font-size:16px">swipe_right</span> Desliza para ver más ciudades
+  </p>
+
+  <!-- Map CTA -->
+  <section class="mt-xl relative overflow-hidden bg-primary rounded-xl p-lg flex flex-col md:flex-row items-center gap-xl border-4 border-primary-container shadow-[12px_12px_0px_0px_rgba(71,0,168,0.2)]">
+    <div class="md:w-1/2 z-10">
+      <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-primary mb-md leading-tight uppercase">Explora el Continente</h2>
+      <p class="font-body-lg text-body-lg text-on-primary/90 mb-lg">Ve dónde se juega cada partido en nuestro mapa interactivo. Explora las 16 ciudades sede de EE.UU., Canadá y México.</p>
+      <a href="map.html" class="inline-block bg-wc-red text-on-primary font-label-bold text-label-bold px-lg py-md rounded shadow-[6px_6px_0px_0px_rgba(150,0,0,1)] hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(150,0,0,1)] active:translate-y-0 transition-all uppercase tracking-wider">
+        Abrir Mapa Interactivo
+      </a>
+    </div>
+    <div class="md:w-1/2 relative">
+      <div class="absolute inset-0 flex items-center justify-center -rotate-12 opacity-30">
+        <div class="w-96 h-96 border-[40px] border-secondary-container/20 rounded-full"></div>
+      </div>
+      <div class="bg-surface-container-lowest p-base rounded shadow-2xl border-2 border-outline-variant transform rotate-3 relative z-20 overflow-hidden">
+        <video autoplay muted loop preload="none" class="w-full h-auto object-cover">
+          <source src="backgrounvideo.mp4" type="video/mp4"/>
+          Tu navegador no soporta el elemento de video.
+      </div>
+    </div>
+  </section>
+  <!-- Map CTA -->
+  <section class="mt-xl relative overflow-hidden bg-[#3CAC3B] rounded-xl p-lg flex flex-col md:flex-row items-center gap-xl border-4 border-primary-container shadow-[12px_12px_0px_0px_rgba(71,0,168,0.2)]">
+    <div class="md:w-1/2 z-10">
+      <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-primary mb-md leading-tight uppercase">CONOCE A LOS ANFITRIONES</h2>
+      <p class="font-body-lg text-body-lg text-on-primary/90 mb-lg">¡El equipo ya creció! Descubre a Maple (Canadá), Zayu (México) y Clutch (EE. UU.), las mascotas oficiales que llevarán la magia del Mundial a cada rincón del continente.</p>
+      <a href="https://youtu.be/QR52cerl0CQ?si=1YrGCghyG7RSg_qB" class="inline-block bg-wc-red text-on-primary font-label-bold text-label-bold px-lg py-md rounded shadow-[6px_6px_0px_0px_rgba(150,0,0,1)] hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(150,0,0,1)] active:translate-y-0 transition-all uppercase tracking-wider">
+        Mirar en youtube
+      </a>
+    </div>
+    <div class="md:w-1/2 relative">
+      <div class="absolute inset-0 flex items-center justify-center -rotate-12 opacity-30">
+        <div class="w-96 h-96 border-[40px] border-secondary-container/20 rounded-full"></div>
+      </div>
+      <div class="bg-surface-container-lowest p-base rounded shadow-2xl border-2 border-outline-variant transform rotate-3 relative z-20 overflow-hidden">
+        <video autoplay muted loop preload="none" class="w-full h-auto object-cover">
+          <source src="mascotas.mp4" type="video/mp4"/>
+          Tu navegador no soporta el elemento de video.
+      </div>
+    </div>
+  </section>
+</main>
+
+
+<!-- Footer -->
+<footer class="bg-surface-container-highest/50 border-t-2 border-outline-variant flex flex-col md:flex-row justify-between items-center gap-md py-lg px-margin-mobile md:px-margin-desktop w-full mt-xl">
+  <a href="index.html" class="font-headline-md text-headline-md text-on-surface tracking-tighter uppercase hover:text-wc-red transition-colors"></a>
+  <div class="flex flex-wrap justify-center gap-md">
+    <a href="stadiums.html" class="font-label-bold text-[12px] text-on-surface-variant hover:text-wc-red transition-colors uppercase">Estadios</a>
+    <a href="map.html" class="font-label-bold text-[12px] text-on-surface-variant hover:text-wc-red transition-colors uppercase">Mapa</a>
+    <a href="schedule.html" class="font-label-bold text-[12px] text-on-surface-variant hover:text-wc-red transition-colors uppercase">Calendario</a>
+                <a href="https://www.instagram.com/21studio.mx?igsh=dWMyZ2V4dzAzd3ly" class="font-body-md text-body-md text-on-surface-variant hover:text-fifa-red transition-colors">21 STUDIO</a>
+
+  </div>
+  <div class="font-label-bold text-[12px] text-primary uppercase"></div>
+</footer>
+
+<script>
+  // Mobile menu
+  const mobileMenu = document.getElementById('mobile-menu');
+  document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+    mobileMenu.classList.remove('hidden');
+    requestAnimationFrame(() => { mobileMenu.style.opacity = '1'; });
+    document.body.style.overflow = 'hidden';
+  });
+  document.getElementById('close-menu').addEventListener('click', () => {
+    mobileMenu.style.opacity = '0';
+    setTimeout(() => { mobileMenu.classList.add('hidden'); }, 300);
+    document.body.style.overflow = '';
+  });
+
+  // Filter
+  const chips = document.querySelectorAll('.filter-chip');
+  const cards = document.querySelectorAll('.city-card');
+  const countNum = document.getElementById('count-num');
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter;
+      chips.forEach(c => {
+        c.classList.remove('bg-wc-red','text-on-primary','border-wc-red','bg-secondary','border-secondary','bg-wc-green','border-wc-green');
+        c.classList.add('bg-surface-container-high','text-on-surface-variant','border-outline-variant');
+      });
+      chip.classList.remove('bg-surface-container-high','text-on-surface-variant','border-outline-variant');
+      if (filter === 'usa') chip.classList.add('bg-secondary','text-on-secondary','border-secondary');
+      else if (filter === 'mexico') chip.classList.add('bg-wc-green','text-white','border-wc-green');
+      else chip.classList.add('bg-wc-red','text-on-primary','border-wc-red');
+
+      let count = 0;
+      cards.forEach(card => {
+        if (filter === 'all' || card.dataset.country === filter) {
+          card.classList.remove('hidden-card');
+          count++;
+        } else {
+          card.classList.add('hidden-card');
+        }
+      });
+      countNum.textContent = count;
+    });
+  });
+
+  // URL filter
+  const urlFilter = new URLSearchParams(location.search).get('filter');
+  if (urlFilter) {
+    const matchChip = document.querySelector(`[data-filter="${urlFilter}"]`);
+    if (matchChip) matchChip.click();
+  }
+
+  // Page transitions
+  document.querySelectorAll('a[href]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href && !href.startsWith('#') && !href.startsWith('mailto') && !link.target) {
+        e.preventDefault();
+        document.body.classList.add('fade-out');
+        setTimeout(() => { window.location = href; }, 280);
+      }
+    });
+  });
+</script>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+const trophyCanvas = document.getElementById('trophy-canvas');
+const trophyContainer = document.getElementById('trophy-container');
+
+const trophyRenderer = new THREE.WebGLRenderer({ canvas: trophyCanvas, alpha: true, antialias: true });
+trophyRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+trophyRenderer.outputColorSpace = THREE.SRGBColorSpace;
+trophyRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+trophyRenderer.toneMappingExposure = 1.4;
+
+const trophyScene = new THREE.Scene();
+const trophyCamera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+trophyCamera.position.set(0, 0.3, 4.5);
+
+trophyScene.add(new THREE.AmbientLight(0xfff8e7, 1.8));
+const trophyKeyLight = new THREE.DirectionalLight(0xfff0c0, 5);
+trophyKeyLight.position.set(3, 6, 4);
+trophyScene.add(trophyKeyLight);
+const trophyFillLight = new THREE.DirectionalLight(0xd4af37, 2);
+trophyFillLight.position.set(-4, 2, 2);
+trophyScene.add(trophyFillLight);
+const trophyRimLight = new THREE.DirectionalLight(0xffffff, 1.5);
+trophyRimLight.position.set(0, -2, -4);
+trophyScene.add(trophyRimLight);
+
+let trophyMesh = null;
+let trophyIsDragging = false;
+let trophyPrevMouse = { x: 0, y: 0 };
+let trophyRotVel = { x: 0, y: 0 };
+
+function trophyResize() {
+  const w = trophyContainer.clientWidth;
+  const h = trophyContainer.clientHeight;
+  trophyRenderer.setSize(w, h, false);
+  trophyCamera.aspect = w / h;
+  trophyCamera.updateProjectionMatrix();
+}
+new ResizeObserver(trophyResize).observe(trophyContainer);
+trophyResize();
+
+const trophyLoader = new GLTFLoader();
+trophyLoader.load(
+  'fifa-trophy/source/model.glb',
+  (gltf) => {
+    trophyMesh = gltf.scene;
+    const box = new THREE.Box3().setFromObject(trophyMesh);
+    const center = box.getCenter(new THREE.Vector3());
+    const size = box.getSize(new THREE.Vector3());
+    const maxDim = Math.max(size.x, size.y, size.z);
+    trophyMesh.position.sub(center);
+    trophyMesh.scale.setScalar(2.6 / maxDim);
+    trophyScene.add(trophyMesh);
+  },
+  undefined,
+  (err) => console.warn('Trophy GLB load error:', err)
+);
+
+const trophyHitArea = document.getElementById('trophy-hit');
+
+trophyHitArea.addEventListener('mousedown', (e) => {
+  trophyIsDragging = true;
+  trophyPrevMouse = { x: e.clientX, y: e.clientY };
+  trophyRotVel = { x: 0, y: 0 };
+  trophyHitArea.style.cursor = 'grabbing';
+  e.stopPropagation();
+  e.preventDefault();
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (!trophyIsDragging || !trophyMesh) return;
+  const dx = e.clientX - trophyPrevMouse.x;
+  const dy = e.clientY - trophyPrevMouse.y;
+  trophyMesh.rotation.y += dx * 0.012;
+  trophyMesh.rotation.x += dy * 0.006;
+  trophyRotVel = { x: dy * 0.004, y: dx * 0.006 };
+  trophyPrevMouse = { x: e.clientX, y: e.clientY };
+});
+
+window.addEventListener('mouseup', () => {
+  trophyIsDragging = false;
+  trophyHitArea.style.cursor = 'grab';
+});
+
+let trophyPrevTouch = null;
+trophyHitArea.addEventListener('touchstart', (e) => {
+  trophyPrevTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  trophyRotVel = { x: 0, y: 0 };
+  e.preventDefault();
+}, { passive: false });
+
+trophyHitArea.addEventListener('touchmove', (e) => {
+  if (!trophyPrevTouch || !trophyMesh) return;
+  const dx = e.touches[0].clientX - trophyPrevTouch.x;
+  const dy = e.touches[0].clientY - trophyPrevTouch.y;
+  trophyMesh.rotation.y += dx * 0.012;
+  trophyMesh.rotation.x += dy * 0.006;
+  trophyRotVel = { x: dy * 0.004, y: dx * 0.006 };
+  trophyPrevTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  e.preventDefault();
+}, { passive: false });
+
+trophyHitArea.addEventListener('touchend', () => { trophyPrevTouch = null; });
+
+function trophyAnimate() {
+  requestAnimationFrame(trophyAnimate);
+  if (trophyMesh) {
+    if (!trophyIsDragging) {
+      if (Math.abs(trophyRotVel.x) > 0.0001 || Math.abs(trophyRotVel.y) > 0.0001) {
+        trophyMesh.rotation.x += trophyRotVel.x;
+        trophyMesh.rotation.y += trophyRotVel.y;
+        trophyRotVel.x *= 0.92;
+        trophyRotVel.y *= 0.92;
+      } else {
+        trophyMesh.rotation.y += 0.004;
+      }
+    }
+  }
+  trophyRenderer.render(trophyScene, trophyCamera);
+}
+trophyAnimate();
+</script>
+</body>
+</html>

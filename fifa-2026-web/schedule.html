@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FIFA World Cup 2026 | Match Schedule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="dns-prefetch" href="https://upload.wikimedia.org"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode:"class",
+    theme:{extend:{
+      colors:{
+        "surface-container-low":"#f9f1ff","secondary":"#0041c9","outline-variant":"#ccc3d8",
+        "primary-fixed":"#e9ddff","secondary-fixed":"#dce1ff","outline":"#7b7487",
+        "error-container":"#ffdad6","error":"#e21a22","on-error":"#ffffff",
+        "tertiary-container":"#00a651","on-secondary":"#ffffff","surface-tint":"#6f31e5",
+        "background":"#fef7ff","on-surface":"#1d1a24","surface":"#fef7ff",
+        "surface-container-highest":"#e7e0ee","on-tertiary":"#ffffff","surface-bright":"#fef7ff",
+        "on-primary-container":"#ceb8ff","on-secondary-container":"#e4e7ff",
+        "secondary-container":"#0356ff","surface-container":"#f3ebfa",
+        "on-surface-variant":"#4a4455","on-tertiary-container":"#ffffff","tertiary":"#00a651",
+        "primary":"#4700a8","primary-fixed-dim":"#d0bcff","surface-variant":"#e7e0ee",
+        "primary-container":"#6118d7","surface-container-lowest":"#ffffff",
+        "inverse-surface":"#322f39","surface-container-high":"#ede5f4",
+        "on-background":"#1d1a24","inverse-on-surface":"#f6eefd","on-primary":"#ffffff"
+      },
+      borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},
+      spacing:{"gutter":"24px","md":"24px","xl":"80px","margin-mobile":"16px","xs":"4px","lg":"48px","sm":"12px","base":"8px","margin-desktop":"64px"},
+      fontFamily:{"label-sm":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Plus Jakarta Sans"],"display-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"label-bold":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"]},
+      fontSize:{
+        "label-sm":["12px",{"lineHeight":"16px","fontWeight":"500"}],
+        "headline-lg":["32px",{"lineHeight":"40px","fontWeight":"700"}],
+        "headline-lg-mobile":["28px",{"lineHeight":"36px","fontWeight":"700"}],
+        "display-md":["48px",{"lineHeight":"56px","letterSpacing":"-0.03em","fontWeight":"800"}],
+        "body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],
+        "body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],
+        "headline-md":["24px",{"lineHeight":"32px","fontWeight":"700"}],
+        "label-bold":["14px",{"lineHeight":"20px","fontWeight":"700"}],
+        "display-lg":["72px",{"lineHeight":"80px","letterSpacing":"-0.04em","fontWeight":"800"}]
+      }
+    }}
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24 }
+  .paper-texture { background-color:#fef7ff; background-image:radial-gradient(#6118d7 0.5px, transparent 0.5px); background-size:24px 24px; }
+  .hard-shadow-primary { box-shadow:6px 6px 0 0 #4700a8; }
+  .hard-shadow-secondary { box-shadow:6px 6px 0 0 #0041c9; }
+  .hard-shadow-error { box-shadow:6px 6px 0 0 #e21a22; }
+  .vibrant-gradient { background: linear-gradient(135deg, #4700a8 0%, #0356ff 100%); }
+  body { animation: bodyFadeIn 0.4s ease forwards; }
+  @keyframes bodyFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .fade-out { opacity:0 !important; transition: opacity 0.25s ease !important; animation: none; }
+  .match-card { transition: all 0.3s ease; }
+  .match-card.hidden-match { display:none; }
+  .date-section { transition: all 0.3s ease; }
+  .date-section.hidden-section { display:none; }
+  .phase-btn.active { background:#4700a8; color:white; }
+
+  /* Date jump nav */
+  #date-jump-wrapper {
+    position: sticky;
+    top: 68px;
+    z-index: 40;
+    background: rgba(254,247,255,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 2px solid #ccc3d8;
+    padding: 8px 0;
+    margin-bottom: 32px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  @media (min-width: 1024px) {
+    #date-jump-wrapper.nav-hidden {
+      transform: translateY(-110%);
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+  #date-jump-nav { scrollbar-width: none; }
+  #date-jump-nav::-webkit-scrollbar { display: none; }
+  .date-chip {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 8px;
+    border: 2px solid #ccc3d8;
+    color: #4a4455;
+    background: white;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .date-chip:hover { border-color: #4700a8; color: #4700a8; }
+  .date-chip.chip-active { background: #4700a8; color: white; border-color: #4700a8; }
+  .date-chip .chip-label { font-size: 11px; font-weight: 700; line-height: 1.2; text-transform: uppercase; letter-spacing: 0.05em; }
+  .date-chip .chip-sub { font-size: 9px; text-transform: uppercase; opacity: 0.7; line-height: 1; }
+
+  /* Collapsible sections */
+  .section-header-row { cursor: pointer; }
+  .section-chevron-icon { transition: transform 0.2s; }
+  .date-content { overflow: hidden; }
+  .date-content.collapsed { display: none; }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden">
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="fixed inset-0 bg-background z-[100] flex flex-col items-center justify-center gap-xl hidden" style="opacity:0;transition:opacity 0.3s">
+  <button id="close-menu" class="absolute top-6 right-6 text-on-surface"><span class="material-symbols-outlined text-4xl">close</span></button>
+  <a href="index.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-primary transition-colors">INICIO</a>
+  <a href="stadiums.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-primary transition-colors">ESTADIOS</a>
+  <a href="cities.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-primary transition-colors">CIUDADES</a>
+  <a href="map.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-primary transition-colors">MAPA</a>
+  <a href="schedule.html" class="font-label-bold text-2xl text-primary border-b-4 border-primary pb-1">CALENDARIO</a>
+</div>
+
+<!-- Nav -->
+<nav class="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b-4 border-secondary flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 shadow-[0_4px_0_0_#0041c9]">
+  <a href="index.html" class="font-headline-md text-headline-md text-primary tracking-tight hover:text-secondary transition-colors">FIFA WORLD CUP 26</a>
+  <div class="hidden lg:flex items-center gap-lg">
+    <a href="stadiums.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-primary transition-colors">ESTADIOS</a>
+    <a href="cities.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-primary transition-colors">CIUDADES</a>
+    <a href="map.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-primary transition-colors">MAPA</a>
+    <a href="schedule.html" class="font-label-bold text-label-bold text-primary border-b-4 border-primary pb-1">CALENDARIO</a>
+  </div>
+  <div class="flex items-center gap-sm">
+    <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 flex items-center justify-center text-on-surface hover:text-primary transition-colors">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <a href="stadiums.html" class="hidden lg:block bg-primary text-on-primary font-label-bold text-label-bold px-md py-sm rounded-lg hover:opacity-90 transition-all uppercase">EXPLORAR SEDES</a>
+  </div>
+</nav>
+
+<main class="paper-texture min-h-screen">
+  <!-- Hero / Filter Section -->
+  <section class="px-margin-mobile md:px-margin-desktop py-xl">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl">
+        <div class="relative">
+          <div class="absolute -top-12 -left-8 w-24 h-24 bg-primary-fixed-dim opacity-40 rounded-full blur-2xl -z-10"></div>
+          <h1 class="font-display-md text-display-md uppercase text-on-surface leading-none mb-4">
+            Calendario <br/><span class="text-primary">del Torneo</span>
+          </h1>
+          <p class="font-body-lg text-body-lg text-on-surface-variant max-w-md">Planifica tu viaje por América del Norte mientras 48 naciones compiten por el trofeo.</p>
+        </div>
+        <!-- Phase Filter -->
+        <div class="flex flex-wrap gap-xs bg-surface-container p-2 rounded-xl border-2 border-outline-variant">
+          <button data-phase="all" class="phase-btn active px-md py-2 rounded-lg font-label-bold text-label-bold uppercase transition-all">Todos los Partidos</button>
+          <button data-phase="group" class="phase-btn text-on-surface-variant hover:bg-surface-variant px-md py-2 rounded-lg font-label-bold text-label-bold uppercase transition-all">Fase de Grupos</button>
+          <button data-phase="knockout" class="phase-btn text-on-surface-variant hover:bg-surface-variant px-md py-2 rounded-lg font-label-bold text-label-bold uppercase transition-all">Rondas Eliminatorias</button>
+        </div>
+      </div>
+
+      <!-- Venue + Date Filters -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-md mb-xl">
+        <div class="col-span-1 md:col-span-2">
+          <label class="font-label-bold text-label-bold text-on-surface-variant mb-2 block uppercase">Filtrar por Sede</label>
+          <div class="relative">
+            <select id="venue-filter" class="w-full bg-surface-container-lowest border-2 border-primary rounded-xl py-4 px-md appearance-none font-body-md text-on-surface focus:ring-primary focus:border-primary">
+              <option value="all">Todos los Estadios</option>
+              <option value="azteca">Estadio Azteca — Mexico City</option>
+              <option value="sofi">SoFi Stadium — Los Angeles</option>
+              <option value="metlife">MetLife Stadium — New York/NJ</option>
+              <option value="bcplace">BC Place — Vancouver</option>
+              <option value="bbva">Estadio BBVA — Monterrey</option>
+              <option value="mbenz">Mercedes-Benz Stadium — Atlanta</option>
+              <option value="arrowhead">Arrowhead Stadium — Kansas City</option>
+              <option value="gillette">Gillette Stadium — Boston</option>
+              <option value="akron">Estadio Akron — Guadalajara</option>
+              <option value="bmo">BMO Field — Toronto</option>
+              <option value="hardrock">Hard Rock Stadium — Miami</option>
+              <option value="lincoln">Lincoln Financial Field — Philadelphia</option>
+              <option value="nrg">NRG Stadium — Houston</option>
+              <option value="lumen">Lumen Field — Seattle</option>
+              <option value="levis">Levi's Stadium — San Francisco</option>
+              <option value="att">AT&amp;T Stadium — Dallas</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary">expand_more</span>
+          </div>
+        </div>
+        <div class="col-span-1">
+          <label class="font-label-bold text-label-bold text-on-surface-variant mb-2 block uppercase">Filtrar por País</label>
+          <div class="relative">
+            <select id="country-filter" class="w-full bg-surface-container-lowest border-2 border-primary rounded-xl py-4 px-md appearance-none font-body-md text-on-surface focus:ring-primary focus:border-primary">
+              <option value="all">Todos los Países</option>
+              <option value="usa">USA</option>
+              <option value="mexico">México</option>
+              <option value="canada">Canadá</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary">expand_more</span>
+          </div>
+        </div>
+        <div class="col-span-1 flex items-end">
+          <button id="reset-btn" class="w-full bg-surface-container-high text-on-surface-variant font-label-bold text-label-bold py-4 rounded-xl border-2 border-outline-variant hover:border-primary hover:text-primary transition-all flex items-center justify-center gap-2 uppercase">
+            <span class="material-symbols-outlined">refresh</span> Restablecer
+          </button>
+        </div>
+      </div>
+
+      <!-- Results counter -->
+      <p id="results-counter" class="font-label-sm text-on-surface-variant mb-sm">Mostrando <strong id="match-count">25</strong> partidos</p>
+
+    </div>
+  </section>
+
+  <!-- Sticky Date Jump Nav -->
+  <div id="date-jump-wrapper">
+    <div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+      <div class="flex gap-xs overflow-x-auto" id="date-jump-nav">
+        <!-- chips populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <section class="px-margin-mobile md:px-margin-desktop pb-xl">
+    <div class="max-w-7xl mx-auto">
+      <!-- Match Timeline -->
+      <div class="space-y-xl" id="schedule-container">
+
+        <!-- 11 JUN — Día Inaugural -->
+        <div class="date-section" data-phase="group" data-date="june11">
+          <div class="flex items-center gap-md mb-md">
+            <div class="bg-primary text-on-primary font-headline-md px-lg py-sm rounded-lg uppercase shadow-lg">11 JUN</div>
+            <div class="h-1 flex-grow bg-outline-variant"></div>
+            <div class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Día Inaugural · Fase de Grupos</div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg">
+            <div class="match-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hard-shadow-secondary flex flex-col md:flex-row group transition-transform hover:-translate-y-1" data-venue="azteca" data-country="mexico" data-phase="group">
+              <div class="w-full md:w-1/3 relative h-48 md:h-auto">
+                <img alt="Estadio Azteca" class="w-full h-full object-cover" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Soccer_game_at_the_Azteca_Stadium.JPG/1280px-Soccer_game_at_the_Azteca_Stadium.JPG"/>
+                <div class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 bg-tertiary text-on-tertiary font-label-bold text-xs px-2 py-1 rounded">MATCH 01 · PARTIDO INAUGURAL</div>
+              </div>
+              <div class="p-md flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-4">
+                    <span class="font-label-bold text-label-bold text-tertiary uppercase tracking-tighter">Grupo A</span>
+                    <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-xs">17:00 CT</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-md mb-lg">
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-tertiary border-2 border-tertiary">MX</div>
+                      <span class="font-label-bold text-label-bold uppercase">México</span>
+                    </div>
+                    <div class="font-headline-md text-outline-variant">VS</div>
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-outline border-2 border-outline-variant">A2</div>
+                      <span class="font-label-bold text-label-bold uppercase">Rival A</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t-2 border-dotted border-outline-variant pt-4 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL' 1">location_on</span>
+                  <div>
+                    <p class="font-label-bold text-sm leading-none text-on-surface uppercase">Estadio Azteca</p>
+                    <p class="text-xs text-on-surface-variant uppercase">Ciudad de México · 87,523 cap.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="match-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hard-shadow-secondary flex flex-col md:flex-row group transition-transform hover:-translate-y-1" data-venue="bcplace" data-country="canada" data-phase="group">
+              <div class="w-full md:w-1/3 relative h-48 md:h-auto">
+                <img alt="BC Place" class="w-full h-full object-cover" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/BCplace_stadium.jpg/1280px-BCplace_stadium.jpg"/>
+                <div class="absolute inset-0 bg-secondary/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 bg-tertiary text-on-tertiary font-label-bold text-xs px-2 py-1 rounded">MATCH 02</div>
+              </div>
+              <div class="p-md flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-4">
+                    <span class="font-label-bold text-label-bold text-tertiary uppercase tracking-tighter">Grupo B</span>
+                    <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-xs">19:00 PT</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-md mb-lg">
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-tertiary border-2 border-tertiary">CA</div>
+                      <span class="font-label-bold text-label-bold uppercase">Canadá</span>
+                    </div>
+                    <div class="font-headline-md text-outline-variant">VS</div>
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-outline border-2 border-outline-variant">B2</div>
+                      <span class="font-label-bold text-label-bold uppercase">Rival B</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t-2 border-dotted border-outline-variant pt-4 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL' 1">location_on</span>
+                  <div>
+                    <p class="font-label-bold text-sm leading-none text-on-surface uppercase">BC Place</p>
+                    <p class="text-xs text-on-surface-variant uppercase">Vancouver, Canadá · 54,500 cap.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12 JUN -->
+        <div class="date-section" data-phase="group" data-date="june12">
+          <div class="flex items-center gap-md mb-md">
+            <div class="bg-secondary text-on-secondary font-headline-md px-lg py-sm rounded-lg uppercase shadow-lg">12 JUN</div>
+            <div class="h-1 flex-grow bg-outline-variant"></div>
+            <div class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Fase de Grupos · Jornada 1</div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+            <div class="match-card bg-surface-container-low border-2 border-transparent hover:border-tertiary rounded-xl p-md transition-all group" data-venue="sofi" data-country="usa" data-phase="group">
+              <div class="flex justify-between mb-4"><span class="text-xs font-label-bold text-tertiary uppercase">Grupo C</span><span class="text-xs font-label-bold text-on-surface-variant uppercase">SoFi Stadium</span></div>
+              <div class="flex items-center gap-md justify-center py-4">
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-tertiary"></div><span class="text-xs font-bold uppercase">C1</span></div>
+                <span class="font-label-bold text-on-surface-variant">VS</span>
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-outline-variant"></div><span class="text-xs font-bold uppercase">C2</span></div>
+              </div>
+              <p class="text-center text-xs text-on-surface-variant font-label-bold mt-2">15:00 PT · MATCH 03</p>
+            </div>
+            <div class="match-card bg-surface-container-low border-2 border-transparent hover:border-tertiary rounded-xl p-md transition-all group" data-venue="bbva" data-country="mexico" data-phase="group">
+              <div class="flex justify-between mb-4"><span class="text-xs font-label-bold text-tertiary uppercase">Grupo D</span><span class="text-xs font-label-bold text-on-surface-variant uppercase">Estadio BBVA</span></div>
+              <div class="flex items-center gap-md justify-center py-4">
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-tertiary"></div><span class="text-xs font-bold uppercase">D1</span></div>
+                <span class="font-label-bold text-on-surface-variant">VS</span>
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-outline-variant"></div><span class="text-xs font-bold uppercase">D2</span></div>
+              </div>
+              <p class="text-center text-xs text-on-surface-variant font-label-bold mt-2">17:00 CT · MATCH 04</p>
+            </div>
+            <div class="match-card bg-surface-container-low border-2 border-transparent hover:border-tertiary rounded-xl p-md transition-all group" data-venue="gillette" data-country="usa" data-phase="group">
+              <div class="flex justify-between mb-4"><span class="text-xs font-label-bold text-tertiary uppercase">Grupo E</span><span class="text-xs font-label-bold text-on-surface-variant uppercase">Gillette Stadium</span></div>
+              <div class="flex items-center gap-md justify-center py-4">
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-tertiary"></div><span class="text-xs font-bold uppercase">E1</span></div>
+                <span class="font-label-bold text-on-surface-variant">VS</span>
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-outline-variant"></div><span class="text-xs font-bold uppercase">E2</span></div>
+              </div>
+              <p class="text-center text-xs text-on-surface-variant font-label-bold mt-2">18:00 ET · MATCH 05</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13 JUN -->
+        <div class="date-section" data-phase="group" data-date="june13">
+          <div class="flex items-center gap-md mb-md">
+            <div class="bg-tertiary text-on-tertiary font-headline-md px-lg py-sm rounded-lg uppercase shadow-lg">13 JUN</div>
+            <div class="h-1 flex-grow bg-outline-variant"></div>
+            <div class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Fase de Grupos · Jornada 1</div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+            <div class="match-card bg-surface-container-low border-2 border-transparent hover:border-tertiary rounded-xl p-md transition-all group" data-venue="arrowhead" data-country="usa" data-phase="group">
+              <div class="flex justify-between mb-4"><span class="text-xs font-label-bold text-tertiary uppercase">Grupo F</span><span class="text-xs font-label-bold text-on-surface-variant uppercase">Arrowhead Stadium</span></div>
+              <div class="flex items-center gap-md justify-center py-4">
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-tertiary"></div><span class="text-xs font-bold uppercase">F1</span></div>
+                <span class="font-label-bold text-on-surface-variant">VS</span>
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-outline-variant"></div><span class="text-xs font-bold uppercase">F2</span></div>
+              </div>
+              <p class="text-center text-xs text-on-surface-variant font-label-bold mt-2">17:00 CT · MATCH 06</p>
+            </div>
+            <div class="match-card bg-surface-container-low border-2 border-transparent hover:border-tertiary rounded-xl p-md transition-all group" data-venue="mbenz" data-country="usa" data-phase="group">
+              <div class="flex justify-between mb-4"><span class="text-xs font-label-bold text-tertiary uppercase">Grupo G</span><span class="text-xs font-label-bold text-on-surface-variant uppercase">Mercedes-Benz Stadium</span></div>
+              <div class="flex items-center gap-md justify-center py-4">
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-tertiary"></div><span class="text-xs font-bold uppercase">G1</span></div>
+                <span class="font-label-bold text-on-surface-variant">VS</span>
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-outline-variant"></div><span class="text-xs font-bold uppercase">G2</span></div>
+              </div>
+              <p class="text-center text-xs text-on-surface-variant font-label-bold mt-2">20:00 ET · MATCH 07</p>
+            </div>
+            <div class="match-card bg-surface-container-low border-2 border-transparent hover:border-tertiary rounded-xl p-md transition-all group" data-venue="akron" data-country="mexico" data-phase="group">
+              <div class="flex justify-between mb-4"><span class="text-xs font-label-bold text-tertiary uppercase">Grupo H</span><span class="text-xs font-label-bold text-on-surface-variant uppercase">Estadio Akron</span></div>
+              <div class="flex items-center gap-md justify-center py-4">
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-tertiary"></div><span class="text-xs font-bold uppercase">H1</span></div>
+                <span class="font-label-bold text-on-surface-variant">VS</span>
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-outline-variant"></div><span class="text-xs font-bold uppercase">H2</span></div>
+              </div>
+              <p class="text-center text-xs text-on-surface-variant font-label-bold mt-2">22:00 CT · MATCH 08</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 14 JUN -->
+        <div class="date-section" data-phase="group" data-date="june14">
+          <div class="flex items-center gap-md mb-md">
+            <div class="bg-secondary text-on-secondary font-headline-md px-lg py-sm rounded-lg uppercase shadow-lg">14 JUN</div>
+            <div class="h-1 flex-grow bg-outline-variant"></div>
+            <div class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Fase de Grupos · Jornada 1</div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+            <div class="match-card bg-surface-container-low border-2 border-transparent hover:border-tertiary rounded-xl p-md transition-all group" data-venue="bmo" data-country="canada" data-phase="group">
+              <div class="flex justify-between mb-4"><span class="text-xs font-label-bold text-tertiary uppercase">Grupo I</span><span class="text-xs font-label-bold text-on-surface-variant uppercase">BMO Field</span></div>
+              <div class="flex items-center gap-md justify-center py-4">
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-tertiary"></div><span class="text-xs font-bold uppercase">I1</span></div>
+                <span class="font-label-bold text-on-surface-variant">VS</span>
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-outline-variant"></div><span class="text-xs font-bold uppercase">I2</span></div>
+              </div>
+              <p class="text-center text-xs text-on-surface-variant font-label-bold mt-2">18:00 ET · MATCH 09</p>
+            </div>
+            <div class="match-card bg-surface-container-low border-2 border-transparent hover:border-tertiary rounded-xl p-md transition-all group" data-venue="att" data-country="usa" data-phase="group">
+              <div class="flex justify-between mb-4"><span class="text-xs font-label-bold text-tertiary uppercase">Grupo J</span><span class="text-xs font-label-bold text-on-surface-variant uppercase">AT&amp;T Stadium</span></div>
+              <div class="flex items-center gap-md justify-center py-4">
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-tertiary"></div><span class="text-xs font-bold uppercase">USA</span></div>
+                <span class="font-label-bold text-on-surface-variant">VS</span>
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-outline-variant"></div><span class="text-xs font-bold uppercase">J2</span></div>
+              </div>
+              <p class="text-center text-xs text-on-surface-variant font-label-bold mt-2">20:00 CT · MATCH 10</p>
+            </div>
+            <div class="match-card bg-surface-container-low border-2 border-transparent hover:border-tertiary rounded-xl p-md transition-all group" data-venue="hardrock" data-country="usa" data-phase="group">
+              <div class="flex justify-between mb-4"><span class="text-xs font-label-bold text-tertiary uppercase">Grupo K</span><span class="text-xs font-label-bold text-on-surface-variant uppercase">Hard Rock Stadium</span></div>
+              <div class="flex items-center gap-md justify-center py-4">
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-tertiary"></div><span class="text-xs font-bold uppercase">K1</span></div>
+                <span class="font-label-bold text-on-surface-variant">VS</span>
+                <div class="text-center"><div class="w-10 h-10 bg-surface-variant rounded-full mb-1 mx-auto border-2 border-outline-variant"></div><span class="text-xs font-bold uppercase">K2</span></div>
+              </div>
+              <p class="text-center text-xs text-on-surface-variant font-label-bold mt-2">21:00 ET · MATCH 11</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fase de Grupos Banner -->
+        <div class="rounded-2xl bg-gradient-to-r from-primary/10 to-secondary/10 border-2 border-primary/20 p-xl text-center">
+          <p class="font-label-bold text-label-bold text-primary uppercase tracking-widest mb-sm">Fase de Grupos · Jornadas 1 – 3</p>
+          <h3 class="font-headline-lg text-on-surface mb-sm">72 Partidos · 16 Sedes · 48 Naciones</h3>
+          <p class="font-body-md text-on-surface-variant">11 de junio — 2 de julio de 2026 · Grupos A al L</p>
+        </div>
+
+        <!-- 4 JUL — Ronda de 32 -->
+        <div class="date-section" data-phase="knockout" data-date="july4">
+          <div class="flex items-center gap-md mb-md">
+            <div class="bg-error text-on-error font-headline-md px-lg py-sm rounded-lg uppercase shadow-lg">4 JUL</div>
+            <div class="h-1 flex-grow bg-outline-variant"></div>
+            <div class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Ronda de 32</div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg">
+            <div class="match-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hard-shadow-error flex flex-col md:flex-row group transition-transform hover:-translate-y-1" data-venue="azteca" data-country="mexico" data-phase="knockout">
+              <div class="w-full md:w-1/3 relative h-48 md:h-auto">
+                <img alt="Estadio Azteca" class="w-full h-full object-cover" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Soccer_game_at_the_Azteca_Stadium.JPG/1280px-Soccer_game_at_the_Azteca_Stadium.JPG"/>
+                <div class="absolute inset-0 bg-error/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 bg-error text-on-error font-label-bold text-xs px-2 py-1 rounded">R32 · M01</div>
+              </div>
+              <div class="p-md flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-4">
+                    <span class="font-label-bold text-label-bold text-error uppercase">Ronda de 32</span>
+                    <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-xs">17:00 CT</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-md mb-lg">
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-error border-2 border-error">1A</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">1° Grupo A</span>
+                    </div>
+                    <div class="font-headline-md text-outline-variant">VS</div>
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-outline border-2 border-outline-variant">3X</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Mejor 3°</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t-2 border-dotted border-outline-variant pt-4 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error" style="font-variation-settings:'FILL' 1">location_on</span>
+                  <div>
+                    <p class="font-label-bold text-sm leading-none text-on-surface uppercase">Estadio Azteca</p>
+                    <p class="text-xs text-on-surface-variant uppercase">Ciudad de México · 87,523 cap.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="match-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hard-shadow-error flex flex-col md:flex-row group transition-transform hover:-translate-y-1" data-venue="sofi" data-country="usa" data-phase="knockout">
+              <div class="w-full md:w-1/3 relative h-48 md:h-auto">
+                <img alt="SoFi Stadium" class="w-full h-full object-cover" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/SoFi_Stadium.jpg/1280px-SoFi_Stadium.jpg"/>
+                <div class="absolute inset-0 bg-error/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 bg-error text-on-error font-label-bold text-xs px-2 py-1 rounded">R32 · M02</div>
+              </div>
+              <div class="p-md flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-4">
+                    <span class="font-label-bold text-label-bold text-error uppercase">Ronda de 32</span>
+                    <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-xs">21:00 PT</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-md mb-lg">
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-error border-2 border-error">1C</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">1° Grupo C</span>
+                    </div>
+                    <div class="font-headline-md text-outline-variant">VS</div>
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-outline border-2 border-outline-variant">2D</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">2° Grupo D</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t-2 border-dotted border-outline-variant pt-4 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error" style="font-variation-settings:'FILL' 1">location_on</span>
+                  <div>
+                    <p class="font-label-bold text-sm leading-none text-on-surface uppercase">SoFi Stadium</p>
+                    <p class="text-xs text-on-surface-variant uppercase">Los Ángeles, USA · 70,240 cap.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 JUL — Ronda de 32 -->
+        <div class="date-section" data-phase="knockout" data-date="july5">
+          <div class="flex items-center gap-md mb-md">
+            <div class="bg-error text-on-error font-headline-md px-lg py-sm rounded-lg uppercase shadow-lg">5 JUL</div>
+            <div class="h-1 flex-grow bg-outline-variant"></div>
+            <div class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Ronda de 32</div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg">
+            <div class="match-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hard-shadow-error flex flex-col md:flex-row group transition-transform hover:-translate-y-1" data-venue="bcplace" data-country="canada" data-phase="knockout">
+              <div class="w-full md:w-1/3 relative h-48 md:h-auto">
+                <img alt="BC Place" class="w-full h-full object-cover" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/BCplace_stadium.jpg/1280px-BCplace_stadium.jpg"/>
+                <div class="absolute inset-0 bg-error/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 bg-error text-on-error font-label-bold text-xs px-2 py-1 rounded">R32 · M03</div>
+              </div>
+              <div class="p-md flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-4">
+                    <span class="font-label-bold text-label-bold text-error uppercase">Ronda de 32</span>
+                    <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-xs">17:00 PT</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-md mb-lg">
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-error border-2 border-error">1B</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">1° Grupo B</span>
+                    </div>
+                    <div class="font-headline-md text-outline-variant">VS</div>
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-outline border-2 border-outline-variant">3X</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Mejor 3°</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t-2 border-dotted border-outline-variant pt-4 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error" style="font-variation-settings:'FILL' 1">location_on</span>
+                  <div>
+                    <p class="font-label-bold text-sm leading-none text-on-surface uppercase">BC Place</p>
+                    <p class="text-xs text-on-surface-variant uppercase">Vancouver, Canadá · 54,500 cap.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="match-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hard-shadow-error flex flex-col md:flex-row group transition-transform hover:-translate-y-1" data-venue="arrowhead" data-country="usa" data-phase="knockout">
+              <div class="w-full md:w-1/3 relative h-48 md:h-auto">
+                <img alt="Arrowhead Stadium" class="w-full h-full object-cover" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Kansas_City_Arrowhead_Stadium.jpg/1280px-Kansas_City_Arrowhead_Stadium.jpg"/>
+                <div class="absolute inset-0 bg-error/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 bg-error text-on-error font-label-bold text-xs px-2 py-1 rounded">R32 · M04</div>
+              </div>
+              <div class="p-md flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-4">
+                    <span class="font-label-bold text-label-bold text-error uppercase">Ronda de 32</span>
+                    <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-xs">20:00 CT</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-md mb-lg">
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-error border-2 border-error">1F</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">1° Grupo F</span>
+                    </div>
+                    <div class="font-headline-md text-outline-variant">VS</div>
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-outline border-2 border-outline-variant">2G</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">2° Grupo G</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t-2 border-dotted border-outline-variant pt-4 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error" style="font-variation-settings:'FILL' 1">location_on</span>
+                  <div>
+                    <p class="font-label-bold text-sm leading-none text-on-surface uppercase">Arrowhead Stadium</p>
+                    <p class="text-xs text-on-surface-variant uppercase">Kansas City, USA · 76,416 cap.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9 JUL — Octavos de Final -->
+        <div class="date-section" data-phase="knockout" data-date="july9">
+          <div class="flex items-center gap-md mb-md">
+            <div class="bg-error text-on-error font-headline-md px-lg py-sm rounded-lg uppercase shadow-lg">9 JUL</div>
+            <div class="h-1 flex-grow bg-outline-variant"></div>
+            <div class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Octavos de Final</div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg">
+            <div class="match-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hard-shadow-error flex flex-col md:flex-row group transition-transform hover:-translate-y-1" data-venue="mbenz" data-country="usa" data-phase="knockout">
+              <div class="w-full md:w-1/3 relative h-48 md:h-auto">
+                <img alt="Mercedes-Benz Stadium" class="w-full h-full object-cover" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Mercedes-Benz_Stadium%2C_Atlanta%2C_GA_%2833597623348%29.jpg/1280px-Mercedes-Benz_Stadium%2C_Atlanta%2C_GA_%2833597623348%29.jpg"/>
+                <div class="absolute inset-0 bg-error/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 bg-error text-on-error font-label-bold text-xs px-2 py-1 rounded">R16 · M01</div>
+              </div>
+              <div class="p-md flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-4">
+                    <span class="font-label-bold text-label-bold text-error uppercase">Octavos de Final</span>
+                    <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-xs">20:00 ET</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-md mb-lg">
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-error border-2 border-error">GR1</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. R32-1</span>
+                    </div>
+                    <div class="font-headline-md text-outline-variant">VS</div>
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-outline border-2 border-outline-variant">GR5</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. R32-5</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t-2 border-dotted border-outline-variant pt-4 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error" style="font-variation-settings:'FILL' 1">location_on</span>
+                  <div>
+                    <p class="font-label-bold text-sm leading-none text-on-surface uppercase">Mercedes-Benz Stadium</p>
+                    <p class="text-xs text-on-surface-variant uppercase">Atlanta, USA · 71,000 cap.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="match-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hard-shadow-error flex flex-col md:flex-row group transition-transform hover:-translate-y-1" data-venue="bbva" data-country="mexico" data-phase="knockout">
+              <div class="w-full md:w-1/3 relative h-48 md:h-auto">
+                <img alt="Estadio BBVA" class="w-full h-full object-cover" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Estadio_BBVA_Bancomer.jpg/1280px-Estadio_BBVA_Bancomer.jpg"/>
+                <div class="absolute inset-0 bg-error/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 bg-error text-on-error font-label-bold text-xs px-2 py-1 rounded">R16 · M02</div>
+              </div>
+              <div class="p-md flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-4">
+                    <span class="font-label-bold text-label-bold text-error uppercase">Octavos de Final</span>
+                    <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-xs">22:00 CT</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-md mb-lg">
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-error border-2 border-error">GR2</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. R32-2</span>
+                    </div>
+                    <div class="font-headline-md text-outline-variant">VS</div>
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-outline border-2 border-outline-variant">GR6</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. R32-6</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t-2 border-dotted border-outline-variant pt-4 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error" style="font-variation-settings:'FILL' 1">location_on</span>
+                  <div>
+                    <p class="font-label-bold text-sm leading-none text-on-surface uppercase">Estadio BBVA</p>
+                    <p class="text-xs text-on-surface-variant uppercase">Monterrey, México · 51,349 cap.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11 JUL — Octavos de Final -->
+        <div class="date-section" data-phase="knockout" data-date="july11">
+          <div class="flex items-center gap-md mb-md">
+            <div class="bg-error text-on-error font-headline-md px-lg py-sm rounded-lg uppercase shadow-lg">11 JUL</div>
+            <div class="h-1 flex-grow bg-outline-variant"></div>
+            <div class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Octavos de Final</div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg">
+            <div class="match-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hard-shadow-error flex flex-col md:flex-row group transition-transform hover:-translate-y-1" data-venue="gillette" data-country="usa" data-phase="knockout">
+              <div class="w-full md:w-1/3 relative h-48 md:h-auto">
+                <img alt="Gillette Stadium" class="w-full h-full object-cover" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Gillette_Stadium.JPG/1280px-Gillette_Stadium.JPG"/>
+                <div class="absolute inset-0 bg-error/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 bg-error text-on-error font-label-bold text-xs px-2 py-1 rounded">R16 · M03</div>
+              </div>
+              <div class="p-md flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-4">
+                    <span class="font-label-bold text-label-bold text-error uppercase">Octavos de Final</span>
+                    <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-xs">18:00 ET</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-md mb-lg">
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-error border-2 border-error">GR3</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. R32-3</span>
+                    </div>
+                    <div class="font-headline-md text-outline-variant">VS</div>
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-outline border-2 border-outline-variant">GR7</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. R32-7</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t-2 border-dotted border-outline-variant pt-4 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error" style="font-variation-settings:'FILL' 1">location_on</span>
+                  <div>
+                    <p class="font-label-bold text-sm leading-none text-on-surface uppercase">Gillette Stadium</p>
+                    <p class="text-xs text-on-surface-variant uppercase">Boston, USA · 65,878 cap.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="match-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hard-shadow-error flex flex-col md:flex-row group transition-transform hover:-translate-y-1" data-venue="akron" data-country="mexico" data-phase="knockout">
+              <div class="w-full md:w-1/3 relative h-48 md:h-auto">
+                <img alt="Estadio Akron" class="w-full h-full object-cover" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/EstadioAkronGDL.jpg/1280px-EstadioAkronGDL.jpg"/>
+                <div class="absolute inset-0 bg-error/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 bg-error text-on-error font-label-bold text-xs px-2 py-1 rounded">R16 · M04</div>
+              </div>
+              <div class="p-md flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-4">
+                    <span class="font-label-bold text-label-bold text-error uppercase">Octavos de Final</span>
+                    <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-xs">20:00 CT</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-md mb-lg">
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-error border-2 border-error">GR4</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. R32-4</span>
+                    </div>
+                    <div class="font-headline-md text-outline-variant">VS</div>
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-outline border-2 border-outline-variant">GR8</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. R32-8</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t-2 border-dotted border-outline-variant pt-4 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error" style="font-variation-settings:'FILL' 1">location_on</span>
+                  <div>
+                    <p class="font-label-bold text-sm leading-none text-on-surface uppercase">Estadio Akron</p>
+                    <p class="text-xs text-on-surface-variant uppercase">Guadalajara, México · 46,232 cap.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 14 JUL — Cuartos de Final -->
+        <div class="date-section" data-phase="knockout" data-date="july14">
+          <div class="flex items-center gap-md mb-md">
+            <div class="bg-error text-on-error font-headline-md px-lg py-sm rounded-lg uppercase shadow-lg">14 JUL</div>
+            <div class="h-1 flex-grow bg-outline-variant"></div>
+            <div class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Cuartos de Final</div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg">
+            <div class="match-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hard-shadow-error flex flex-col md:flex-row group transition-transform hover:-translate-y-1" data-venue="bcplace" data-country="canada" data-phase="knockout">
+              <div class="w-full md:w-1/3 relative h-48 md:h-auto">
+                <img alt="BC Place" class="w-full h-full object-cover" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/BCplace_stadium.jpg/1280px-BCplace_stadium.jpg"/>
+                <div class="absolute inset-0 bg-error/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 bg-error text-on-error font-label-bold text-xs px-2 py-1 rounded">QF · M01</div>
+              </div>
+              <div class="p-md flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-4">
+                    <span class="font-label-bold text-label-bold text-error uppercase">Cuartos de Final</span>
+                    <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-xs">18:00 PT</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-md mb-lg">
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-error border-2 border-error">GR1</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. R16-1</span>
+                    </div>
+                    <div class="font-headline-md text-outline-variant">VS</div>
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-outline border-2 border-outline-variant">GR3</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. R16-3</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t-2 border-dotted border-outline-variant pt-4 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error" style="font-variation-settings:'FILL' 1">location_on</span>
+                  <div>
+                    <p class="font-label-bold text-sm leading-none text-on-surface uppercase">BC Place</p>
+                    <p class="text-xs text-on-surface-variant uppercase">Vancouver, Canadá · 54,500 cap.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="match-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hard-shadow-error flex flex-col md:flex-row group transition-transform hover:-translate-y-1" data-venue="arrowhead" data-country="usa" data-phase="knockout">
+              <div class="w-full md:w-1/3 relative h-48 md:h-auto">
+                <img alt="Arrowhead Stadium" class="w-full h-full object-cover" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Kansas_City_Arrowhead_Stadium.jpg/1280px-Kansas_City_Arrowhead_Stadium.jpg"/>
+                <div class="absolute inset-0 bg-error/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 bg-error text-on-error font-label-bold text-xs px-2 py-1 rounded">QF · M02</div>
+              </div>
+              <div class="p-md flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-4">
+                    <span class="font-label-bold text-label-bold text-error uppercase">Cuartos de Final</span>
+                    <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-xs">21:00 CT</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-md mb-lg">
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-error border-2 border-error">GR2</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. R16-2</span>
+                    </div>
+                    <div class="font-headline-md text-outline-variant">VS</div>
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-outline border-2 border-outline-variant">GR4</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. R16-4</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t-2 border-dotted border-outline-variant pt-4 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error" style="font-variation-settings:'FILL' 1">location_on</span>
+                  <div>
+                    <p class="font-label-bold text-sm leading-none text-on-surface uppercase">Arrowhead Stadium</p>
+                    <p class="text-xs text-on-surface-variant uppercase">Kansas City, USA · 76,416 cap.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 17 JUL — Semifinales -->
+        <div class="date-section" data-phase="knockout" data-date="july17">
+          <div class="flex items-center gap-md mb-md">
+            <div class="bg-error text-on-error font-headline-md px-lg py-sm rounded-lg uppercase shadow-lg">17 JUL</div>
+            <div class="h-1 flex-grow bg-outline-variant"></div>
+            <div class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Semifinales</div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg">
+            <div class="match-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hard-shadow-error flex flex-col md:flex-row group transition-transform hover:-translate-y-1" data-venue="azteca" data-country="mexico" data-phase="knockout">
+              <div class="w-full md:w-1/3 relative h-48 md:h-auto">
+                <img alt="Estadio Azteca" class="w-full h-full object-cover" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Soccer_game_at_the_Azteca_Stadium.JPG/1280px-Soccer_game_at_the_Azteca_Stadium.JPG"/>
+                <div class="absolute inset-0 bg-error/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 bg-error text-on-error font-label-bold text-xs px-2 py-1 rounded">SF · M01</div>
+              </div>
+              <div class="p-md flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-4">
+                    <span class="font-label-bold text-label-bold text-error uppercase">Semifinal</span>
+                    <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-xs">18:00 CT</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-md mb-lg">
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-error border-2 border-error">GQ1</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. QF-1</span>
+                    </div>
+                    <div class="font-headline-md text-outline-variant">VS</div>
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-outline border-2 border-outline-variant">GQ3</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. QF-3</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t-2 border-dotted border-outline-variant pt-4 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error" style="font-variation-settings:'FILL' 1">location_on</span>
+                  <div>
+                    <p class="font-label-bold text-sm leading-none text-on-surface uppercase">Estadio Azteca</p>
+                    <p class="text-xs text-on-surface-variant uppercase">Ciudad de México · 87,523 cap.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="match-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hard-shadow-error flex flex-col md:flex-row group transition-transform hover:-translate-y-1" data-venue="sofi" data-country="usa" data-phase="knockout">
+              <div class="w-full md:w-1/3 relative h-48 md:h-auto">
+                <img alt="SoFi Stadium" class="w-full h-full object-cover" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/SoFi_Stadium.jpg/1280px-SoFi_Stadium.jpg"/>
+                <div class="absolute inset-0 bg-error/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 bg-error text-on-error font-label-bold text-xs px-2 py-1 rounded">SF · M02</div>
+              </div>
+              <div class="p-md flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-4">
+                    <span class="font-label-bold text-label-bold text-error uppercase">Semifinal</span>
+                    <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-xs">21:00 PT</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-md mb-lg">
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-error border-2 border-error">GQ2</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. QF-2</span>
+                    </div>
+                    <div class="font-headline-md text-outline-variant">VS</div>
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-outline border-2 border-outline-variant">GQ4</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Gan. QF-4</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t-2 border-dotted border-outline-variant pt-4 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error" style="font-variation-settings:'FILL' 1">location_on</span>
+                  <div>
+                    <p class="font-label-bold text-sm leading-none text-on-surface uppercase">SoFi Stadium</p>
+                    <p class="text-xs text-on-surface-variant uppercase">Los Ángeles, USA · 70,240 cap.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 18 JUL — Tercer Puesto -->
+        <div class="date-section" data-phase="knockout" data-date="july18">
+          <div class="flex items-center gap-md mb-md">
+            <div class="bg-error text-on-error font-headline-md px-lg py-sm rounded-lg uppercase shadow-lg">18 JUL</div>
+            <div class="h-1 flex-grow bg-outline-variant"></div>
+            <div class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Tercer Puesto</div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg">
+            <div class="match-card bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hard-shadow-error flex flex-col md:flex-row group transition-transform hover:-translate-y-1" data-venue="mbenz" data-country="usa" data-phase="knockout">
+              <div class="w-full md:w-1/3 relative h-48 md:h-auto">
+                <img alt="Mercedes-Benz Stadium" class="w-full h-full object-cover" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Mercedes-Benz_Stadium%2C_Atlanta%2C_GA_%2833597623348%29.jpg/1280px-Mercedes-Benz_Stadium%2C_Atlanta%2C_GA_%2833597623348%29.jpg"/>
+                <div class="absolute inset-0 bg-error/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 bg-error text-on-error font-label-bold text-xs px-2 py-1 rounded">3er PUESTO</div>
+              </div>
+              <div class="p-md flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-4">
+                    <span class="font-label-bold text-label-bold text-error uppercase">Tercer Puesto</span>
+                    <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-bold text-xs">17:00 ET</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-md mb-lg">
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-error border-2 border-error">PS1</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Perd. SF-1</span>
+                    </div>
+                    <div class="font-headline-md text-outline-variant">VS</div>
+                    <div class="flex flex-col items-center gap-2 w-1/3">
+                      <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-headline-md text-outline border-2 border-outline-variant">PS2</div>
+                      <span class="font-label-bold text-label-bold uppercase text-xs">Perd. SF-2</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t-2 border-dotted border-outline-variant pt-4 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error" style="font-variation-settings:'FILL' 1">location_on</span>
+                  <div>
+                    <p class="font-label-bold text-sm leading-none text-on-surface uppercase">Mercedes-Benz Stadium</p>
+                    <p class="text-xs text-on-surface-variant uppercase">Atlanta, USA · 71,000 cap.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- JULY 19 — FINAL -->
+        <div class="date-section" data-phase="knockout" data-date="july19">
+          <div class="flex items-center gap-md mb-md">
+            <div class="bg-gradient-to-r from-primary to-secondary text-on-primary font-headline-md px-lg py-sm rounded-lg uppercase shadow-lg">JULY 19</div>
+            <div class="h-1 flex-grow bg-gradient-to-r from-primary/30 to-secondary/30"></div>
+            <div class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest flex items-center gap-sm">
+              <span class="material-symbols-outlined text-wc-red" style="font-variation-settings:'FILL' 1">emoji_events</span>
+              LA GRAN FINAL
+            </div>
+          </div>
+          <div class="match-card bg-gradient-to-br from-primary/5 to-secondary/5 border-2 border-primary/30 rounded-2xl overflow-hidden flex flex-col lg:flex-row group" data-venue="metlife" data-country="usa" data-phase="knockout">
+            <div class="relative lg:w-1/2 h-64 lg:h-auto overflow-hidden">
+              <video autoplay muted loop preload="none" class="w-full h-full object-cover">
+                <source src="metlifevideo.mp4" type="video/mp4"/>
+                Tu navegador no soporta la etiqueta de video.
+              </video>
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent to-primary/20"></div>
+              <div class="absolute top-4 left-4 bg-gradient-to-r from-primary to-secondary text-white font-label-bold text-sm px-md py-xs rounded-lg">LA GRAN FINAL</div>
+            </div>
+            <div class="p-xl lg:w-1/2 flex flex-col justify-center">
+              <p class="font-label-bold text-label-bold text-primary uppercase tracking-widest mb-md">Final de la Copa Mundial FIFA 2026</p>
+              <h2 class="font-display-md text-display-md text-on-surface leading-none mb-md">El Campeón<br/><span class="text-primary">Coronado</span></h2>
+              <p class="font-body-lg text-body-lg text-on-surface-variant mb-lg">Dos naciones. 90 minutos. Un campeón. El mundo presencia cómo se hace historia en el MetLife Stadium, Nueva York/Nueva Jersey.</p>
+              <div class="flex flex-wrap gap-sm">
+                <span class="bg-primary text-on-primary px-md py-xs rounded-full font-label-bold text-label-sm">METLIFE STADIUM</span>
+                <span class="bg-error/10 text-error border border-error/30 px-md py-xs rounded-full font-label-bold text-label-sm">18:00 ET</span>
+                <span class="bg-surface-container text-on-surface-variant px-md py-xs rounded-full font-label-bold text-label-sm">82,500 FANS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- No results message -->
+        <div id="no-results" class="hidden text-center py-xl">
+          <span class="material-symbols-outlined text-on-surface-variant text-6xl mb-md">search_off</span>
+          <h3 class="font-headline-md text-headline-md text-on-surface-variant">No se encontraron partidos</h3>
+          <p class="font-body-md text-on-surface-variant mt-sm">Intenta ajustar los filtros.</p>
+          <button id="clear-filter-btn" class="mt-lg bg-primary text-on-primary font-label-bold text-label-bold px-lg py-sm rounded-lg hover:opacity-90 transition-all">Limpiar Filtros</button>
+        </div>
+      </div>
+
+      <!-- Calendar CTA -->
+      <div class="mt-xl flex justify-center">
+      
+      </div>
+    </div>
+  </section>
+
+  <!-- Never Miss a Moment CTA -->
+  <section class="vibrant-gradient text-on-primary py-xl px-margin-mobile md:px-margin-desktop relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-64 h-64 bg-error opacity-30 -rotate-12 translate-x-1/2 -translate-y-1/2"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-tertiary opacity-20 rounded-full -translate-x-1/2 translate-y-1/2"></div>
+    <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image:radial-gradient(white 1px, transparent 1px);background-size:32px 32px;"></div>
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-xl items-center relative z-10">
+      <div>
+        <h2 class="font-display-md text-display-md text-white uppercase mb-md">No te Pierdas<br/>Ningún Momento</h2>
+        <p class="font-body-lg text-body-lg mb-lg opacity-90 text-white">Sincroniza el calendario completo de partidos con tu agenda personal o descarga el pdf para conocer todas las fechas.</p>
+        <div class="flex flex-wrap gap-md">
+          <a href="FWC26 Match Schedule.pdf" download="FWC26_MATCH-SCHEDULE">
+            <button class="bg-white text-primary font-label-bold text-label-bold px-md py-4 rounded-lg uppercase flex items-center gap-2 hover:bg-surface-bright transition-colors shadow-lg">
+            <span class="material-symbols-outlined">download</span> Descargar PDF
+          </button>
+          </a>
+          <button class="border-2 border-white text-white font-label-bold text-label-bold px-md py-4 rounded-lg uppercase flex items-center gap-2 hover:bg-white/10 transition-colors">
+            <span class="material-symbols-web">Rutas, partidos y clima en tiempo real</span> 
+          </button>
+        </div>
+      </div>
+      <div class="hidden md:block">
+        <!-- TAMAÑO DEL SVG: cambia el valor de width (ej. 200px, 300px, 50%) -->
+        <img alt="Never Miss a Moment" style="width: 260px; height: auto; display: block; margin: 0 auto;" src="Copia de tournaments_fifa-world-cup-2026--white.football-logos.cc.svg"/>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t-2 border-outline-variant flex flex-col md:flex-row justify-between items-center gap-md py-lg px-margin-mobile md:px-margin-desktop w-full">
+  <a href="index.html" class="font-headline-md text-headline-md text-on-surface hover:text-primary transition-colors"></a>
+  <div class="flex flex-wrap justify-center gap-lg">
+    <a href="stadiums.html" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all">Estadios</a>
+    <a href="cities.html" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all">Ciudades</a>
+    <a href="map.html" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all">Mapa</a>
+                <a href="https://www.instagram.com/21studio.mx?igsh=dWMyZ2V4dzAzd3ly" class="font-body-md text-body-md text-on-surface-variant hover:text-fifa-red transition-colors">21 STUDIO</a>
+
+  </div>
+  <div class="font-body-md text-body-md text-secondary uppercase font-bold"></div>
+</footer>
+
+<script>
+  // Mobile menu
+  const mobileMenu = document.getElementById('mobile-menu');
+  document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+    mobileMenu.classList.remove('hidden');
+    requestAnimationFrame(() => { mobileMenu.style.opacity = '1'; });
+    document.body.style.overflow = 'hidden';
+  });
+  document.getElementById('close-menu').addEventListener('click', () => {
+    mobileMenu.style.opacity = '0';
+    setTimeout(() => { mobileMenu.classList.add('hidden'); }, 300);
+    document.body.style.overflow = '';
+  });
+
+  // Filter state
+  let currentPhase = 'all';
+  let currentVenue = 'all';
+  let currentCountry = 'all';
+
+  function applyFilters() {
+    const matchCards = document.querySelectorAll('.match-card');
+    const dateSections = document.querySelectorAll('.date-section');
+    let visibleCount = 0;
+
+    matchCards.forEach(card => {
+      const phaseOk = currentPhase === 'all' || card.dataset.phase === currentPhase;
+      const venueOk = currentVenue === 'all' || card.dataset.venue === currentVenue;
+      const countryOk = currentCountry === 'all' || card.dataset.country === currentCountry;
+
+      if (phaseOk && venueOk && countryOk) {
+        card.classList.remove('hidden-match');
+        visibleCount++;
+      } else {
+        card.classList.add('hidden-match');
+      }
+    });
+
+    // Hide empty date sections
+    dateSections.forEach(section => {
+      const visibleInSection = section.querySelectorAll('.match-card:not(.hidden-match)').length;
+      const phaseOk = currentPhase === 'all' || section.dataset.phase === currentPhase;
+      if (visibleInSection === 0 || !phaseOk) {
+        section.classList.add('hidden-section');
+      } else {
+        section.classList.remove('hidden-section');
+      }
+    });
+
+    document.getElementById('match-count').textContent = visibleCount;
+    document.getElementById('no-results').classList.toggle('hidden', visibleCount > 0);
+  }
+
+  // Phase filter
+  document.querySelectorAll('.phase-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.phase-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentPhase = btn.dataset.phase;
+      applyFilters();
+    });
+  });
+
+  // Venue filter
+  document.getElementById('venue-filter').addEventListener('change', (e) => {
+    currentVenue = e.target.value;
+    applyFilters();
+  });
+
+  // Country filter
+  document.getElementById('country-filter').addEventListener('change', (e) => {
+    currentCountry = e.target.value;
+    applyFilters();
+  });
+
+  // Reset
+  function resetFilters() {
+    currentPhase = 'all'; currentVenue = 'all'; currentCountry = 'all';
+    document.querySelectorAll('.phase-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-phase="all"]').classList.add('active');
+    document.getElementById('venue-filter').value = 'all';
+    document.getElementById('country-filter').value = 'all';
+    applyFilters();
+  }
+  document.getElementById('reset-btn').addEventListener('click', resetFilters);
+  const clearBtn = document.getElementById('clear-filter-btn');
+  if (clearBtn) clearBtn.addEventListener('click', resetFilters);
+
+  // Page transitions
+  document.querySelectorAll('a[href]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href && !href.startsWith('#') && !href.startsWith('mailto') && !link.target) {
+        e.preventDefault();
+        document.body.classList.add('fade-out');
+        setTimeout(() => { window.location = href; }, 280);
+      }
+    });
+  });
+</script>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const sections = document.querySelectorAll('.date-section[data-date]');
+  const jumpNav = document.getElementById('date-jump-nav');
+
+  const dateLabels = {
+    june11: '11 JUN', june12: '12 JUN', june13: '13 JUN', june14: '14 JUN',
+    july4: '4 JUL', july5: '5 JUL', july9: '9 JUL', july11: '11 JUL',
+    july14: '14 JUL', july17: '17 JUL', july18: '18 JUL', july19: '19 JUL'
+  };
+  const phaseLabels = {
+    june11: 'Inaugural', june12: 'Grupos', june13: 'Grupos', june14: 'Grupos',
+    july4: 'R32', july5: 'R32', july9: 'R16', july11: 'R16',
+    july14: 'QF', july17: 'SF', july18: '3er', july19: 'FINAL'
+  };
+
+  const chipMap = {};
+
+  sections.forEach((section, idx) => {
+    const dateKey = section.dataset.date;
+    if (!dateKey || !dateLabels[dateKey]) return;
+
+    section.id = 'section-' + dateKey;
+
+    // Build chip
+    const chip = document.createElement('button');
+    chip.className = 'date-chip';
+    chip.dataset.target = 'section-' + dateKey;
+    chip.innerHTML =
+      '<span class="chip-label">' + dateLabels[dateKey] + '</span>' +
+      '<span class="chip-sub">' + phaseLabels[dateKey] + '</span>';
+    chip.addEventListener('click', () => {
+      const target = document.getElementById('section-' + dateKey);
+      if (target) {
+        expandSection(section);
+        const navH = (document.getElementById('date-jump-wrapper') || {}).offsetHeight || 44;
+        const navTop = 68 + navH;
+        const y = target.getBoundingClientRect().top + window.scrollY - navTop - 8;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    });
+    jumpNav.appendChild(chip);
+    chipMap[dateKey] = chip;
+
+    // Make collapsible: wrap everything after the header
+    const header = section.querySelector('.flex.items-center.gap-md.mb-md');
+    if (!header) return;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'date-content';
+    const toMove = [];
+    let sib = header.nextElementSibling;
+    while (sib) { toMove.push(sib); sib = sib.nextElementSibling; }
+    toMove.forEach(el => wrapper.appendChild(el));
+    section.appendChild(wrapper);
+
+    if (idx !== 0) wrapper.classList.add('collapsed');
+
+    // Chevron button
+    const chevron = document.createElement('button');
+    chevron.className = 'section-chevron ml-2 flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors';
+    const icon = document.createElement('span');
+    icon.className = 'material-symbols-outlined section-chevron-icon text-on-surface-variant';
+    icon.style.fontSize = '20px';
+    icon.textContent = idx === 0 ? 'keyboard_arrow_up' : 'keyboard_arrow_down';
+    chevron.appendChild(icon);
+    header.appendChild(chevron);
+    header.classList.add('section-header-row');
+
+    header.addEventListener('click', () => toggleSection(section));
+  });
+
+  function expandSection(section) {
+    const wrapper = section.querySelector('.date-content');
+    const icon = section.querySelector('.section-chevron-icon');
+    if (wrapper) wrapper.classList.remove('collapsed');
+    if (icon) icon.textContent = 'keyboard_arrow_up';
+  }
+
+  function toggleSection(section) {
+    const wrapper = section.querySelector('.date-content');
+    const icon = section.querySelector('.section-chevron-icon');
+    if (!wrapper) return;
+    const isCollapsed = wrapper.classList.contains('collapsed');
+    wrapper.classList.toggle('collapsed', !isCollapsed);
+    if (icon) icon.textContent = isCollapsed ? 'keyboard_arrow_up' : 'keyboard_arrow_down';
+  }
+
+  // Scrollspy
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const key = entry.target.dataset.date;
+        Object.entries(chipMap).forEach(([k, c]) => {
+          c.classList.toggle('chip-active', k === key);
+        });
+        if (chipMap[key]) {
+          chipMap[key].scrollIntoView({ inline: 'nearest', block: 'nearest' });
+        }
+      }
+    });
+  }, { rootMargin: '-5% 0px -70% 0px' });
+
+  sections.forEach(s => { if (s.id) io.observe(s); });
+
+  // Hide jump nav on scroll down — desktop only (>= 1024px)
+  const jumpWrapper = document.getElementById('date-jump-wrapper');
+  let lastY = window.scrollY;
+  let rafPending = false;
+  window.addEventListener('scroll', () => {
+    if (rafPending) return;
+    rafPending = true;
+    requestAnimationFrame(() => {
+      if (jumpWrapper && window.innerWidth >= 1024) {
+        const currentY = window.scrollY;
+        if (currentY > lastY && currentY > 120) {
+          jumpWrapper.classList.add('nav-hidden');
+        } else {
+          jumpWrapper.classList.remove('nav-hidden');
+        }
+        lastY = currentY;
+      }
+      rafPending = false;
+    });
+  }, { passive: true });
+
+  // Patch applyFilters: auto-expand visible sections after filtering
+  const origApply = window.applyFilters;
+  if (typeof origApply === 'function') {
+    window.applyFilters = function() {
+      origApply();
+      document.querySelectorAll('.date-section:not(.hidden-section)').forEach(s => {
+        expandSection(s);
+      });
+    };
+  }
+});
+</script>
+
+</body>
+</html>

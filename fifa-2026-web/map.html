@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FIFA World Cup 2026 | Interactive Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode:"class",
+    theme:{extend:{
+      colors:{
+        "surface-container-low":"#f9f1ff","secondary":"#0041c9","outline-variant":"#ccc3d8",
+        "background":"#fef7ff","on-surface":"#1d1a24","surface":"#fef7ff",
+        "surface-container-highest":"#e7e0ee","on-secondary":"#ffffff",
+        "secondary-container":"#0356ff","surface-container":"#f3ebfa",
+        "on-surface-variant":"#4a4455","tertiary":"#004417",
+        "primary":"#4700a8","primary-fixed-dim":"#d0bcff","surface-variant":"#e7e0ee",
+        "primary-container":"#6118d7","surface-container-lowest":"#ffffff",
+        "surface-container-high":"#ede5f4","on-background":"#1d1a24","on-primary":"#ffffff",
+        "fifa-red":"#ED1C24","fifa-green":"#00B140","fifa-dark-red":"#7E1212",
+        "fifa-dark-green":"#004417","deep-purple":"#4700a8","electric-blue":"#0041c9"
+      },
+      borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},
+      spacing:{"gutter":"24px","md":"24px","xl":"80px","margin-mobile":"16px","xs":"4px","lg":"48px","sm":"12px","base":"8px","margin-desktop":"64px"},
+      fontFamily:{"label-sm":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Plus Jakarta Sans"],"display-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"label-bold":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"]},
+      fontSize:{
+        "label-sm":["12px",{"lineHeight":"16px","fontWeight":"500"}],
+        "headline-lg":["32px",{"lineHeight":"40px","fontWeight":"700"}],
+        "headline-lg-mobile":["28px",{"lineHeight":"36px","fontWeight":"700"}],
+        "display-md":["48px",{"lineHeight":"56px","letterSpacing":"-0.03em","fontWeight":"800"}],
+        "body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],
+        "body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],
+        "headline-md":["24px",{"lineHeight":"32px","fontWeight":"700"}],
+        "label-bold":["14px",{"lineHeight":"20px","fontWeight":"700"}],
+        "display-lg":["72px",{"lineHeight":"80px","letterSpacing":"-0.04em","fontWeight":"800"}]
+      }
+    }}
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24 }
+  body { animation: bodyFadeIn 0.4s ease forwards; margin:0; padding:0; }
+  @keyframes bodyFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .fade-out { opacity:0 !important; transition: opacity 0.25s ease !important; animation: none; }
+
+  #map-container { width:100%; height:100%; }
+
+  /* Custom Leaflet popup */
+  .leaflet-popup-content-wrapper {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 2px solid #ccc3d8;
+    box-shadow: 4px 4px 0 0 rgba(0,0,0,0.15);
+    padding: 0;
+    overflow: hidden;
+  }
+  .leaflet-popup-content { margin:0; }
+  .leaflet-popup-tip { background: #ffffff; }
+  .leaflet-popup-close-button { top:8px !important; right:8px !important; color:#1d1a24 !important; font-size:20px !important; }
+
+  /* Sidebar */
+  #sidebar { transition: transform 0.3s ease; }
+  #sidebar.hidden-sidebar { transform: translateX(-100%); }
+
+  /* City marker */
+  .city-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .city-dot:hover { transform: scale(1.4); }
+  .city-dot.usa { background-color: #0041c9; }
+  .city-dot.mexico { background-color: #00B140; }
+  .city-dot.canada { background-color: #ED1C24; }
+
+  /* Filter pill active */
+  .map-filter.active { font-weight: 700; }
+
+  /* Leaflet overrides for dark nav */
+  .leaflet-control-attribution { font-size:10px; }
+  .leaflet-bar a { border-radius: 6px !important; }
+</style>
+</head>
+<body class="bg-background text-on-surface font-body-md" style="display:flex;flex-direction:column;height:100vh;overflow:hidden;">
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="fixed inset-0 bg-background z-[200] flex flex-col items-center justify-center gap-xl hidden" style="opacity:0;transition:opacity 0.3s">
+  <button id="close-menu" class="absolute top-6 right-6 text-on-surface"><span class="material-symbols-outlined text-4xl">close</span></button>
+  <a href="index.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-fifa-red transition-colors">INICIO</a>
+  <a href="stadiums.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-fifa-red transition-colors">ESTADIOS</a>
+  <a href="cities.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-fifa-red transition-colors">CIUDADES</a>
+  <a href="map.html" class="font-label-bold text-2xl text-fifa-red border-b-4 border-fifa-red pb-1">MAPA</a>
+  <a href="schedule.html" class="font-label-bold text-2xl text-on-surface-variant hover:text-fifa-red transition-colors">CALENDARIO</a>
+</div>
+
+<!-- Header -->
+<header class="bg-surface-container/80 backdrop-blur-md border-b-4 border-fifa-red sticky top-0 z-50 flex-shrink-0">
+  <nav class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-3">
+    <a href="index.html" class="font-headline-md text-headline-md text-fifa-red tracking-tight hover:opacity-80 transition-opacity">FIFA WORLD CUP 26</a>
+    <div class="hidden md:flex items-center gap-lg">
+      <a href="stadiums.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-fifa-red transition-colors">ESTADIOS</a>
+      <a href="cities.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-fifa-red transition-colors">CIUDADES</a>
+      <a href="map.html" class="font-label-bold text-label-bold text-fifa-red border-b-4 border-fifa-red pb-1">MAPA</a>
+      <a href="schedule.html" class="font-label-bold text-label-bold text-on-surface-variant hover:text-fifa-red transition-colors">CALENDARIO</a>
+    </div>
+    <div class="flex items-center gap-sm">
+      <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center text-on-surface hover:text-fifa-red transition-colors">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <a href="stadiums.html" class="hidden md:block bg-fifa-green text-on-tertiary px-6 py-2 font-label-bold text-label-bold rounded-lg hover:opacity-90 transition-all">EXPLORAR SEDES</a>
+    </div>
+  </nav>
+</header>
+
+<!-- Map Wrapper -->
+<div class="flex flex-grow overflow-hidden relative">
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="w-72 bg-surface-container-lowest border-r border-outline-variant flex flex-col z-20 overflow-hidden flex-shrink-0">
+    <div class="p-md border-b border-outline-variant">
+      <h2 class="font-headline-md text-headline-md text-on-surface mb-sm">Sedes del Torneo</h2>
+      <!-- Filter pills -->
+      <div class="flex gap-xs flex-wrap" id="map-filters">
+        <button data-filter="all" class="map-filter active bg-on-surface text-surface px-sm py-xs rounded-full text-xs font-bold uppercase transition-all">ALL</button>
+        <button data-filter="usa" class="map-filter bg-secondary/10 text-secondary px-sm py-xs rounded-full text-xs font-bold uppercase border border-secondary/30 hover:bg-secondary hover:text-white transition-all">USA</button>
+        <button data-filter="mexico" class="map-filter bg-fifa-green/10 text-fifa-dark-green px-sm py-xs rounded-full text-xs font-bold uppercase border border-fifa-green/30 hover:bg-fifa-green hover:text-white transition-all">MEXICO</button>
+        <button data-filter="canada" class="map-filter bg-fifa-red/10 text-fifa-dark-red px-sm py-xs rounded-full text-xs font-bold uppercase border border-fifa-red/30 hover:bg-fifa-red hover:text-white transition-all">CANADA</button>
+      </div>
+    </div>
+    <div class="flex-grow overflow-y-auto" id="city-list">
+      <!-- Populated by JS -->
+    </div>
+    <div class="p-sm border-t border-outline-variant">
+      <div class="flex gap-md text-xs text-on-surface-variant">
+        <span class="flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-secondary inline-block"></span>USA (11)</span>
+        <span class="flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-fifa-green inline-block"></span>México (3)</span>
+        <span class="flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-fifa-red inline-block"></span>Canadá (2)</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Sidebar toggle on mobile -->
+  <button id="sidebar-toggle" class="absolute left-0 top-1/2 -translate-y-1/2 z-30 bg-surface-container border border-outline-variant rounded-r-lg p-2 shadow-md md:hidden" style="left:0">
+    <span class="material-symbols-outlined text-on-surface" id="sidebar-icon">chevron_right</span>
+  </button>
+
+  <!-- Map -->
+  <div id="map-container" class="flex-grow z-10"></div>
+</div>
+
+<script>
+const CITIES = [
+  { name:"New York / New Jersey", stadium:"MetLife Stadium", country:"usa", lat:40.813, lon:-74.074, capacity:"82,500", matches:8, note:"SEDE DE LA FINAL" },
+  { name:"Los Angeles", stadium:"SoFi Stadium", country:"usa", lat:33.953, lon:-118.339, capacity:"70,240", matches:6 },
+  { name:"Dallas", stadium:"AT&T Stadium", country:"usa", lat:32.748, lon:-97.093, capacity:"80,000+", matches:5 },
+  { name:"San Francisco Bay Area", stadium:"Levi's Stadium", country:"usa", lat:37.403, lon:-121.970, capacity:"68,500", matches:5 },
+  { name:"Miami", stadium:"Hard Rock Stadium", country:"usa", lat:25.958, lon:-80.239, capacity:"65,326", matches:6 },
+  { name:"Atlanta", stadium:"Mercedes-Benz Stadium", country:"usa", lat:33.755, lon:-84.401, capacity:"71,000", matches:5 },
+  { name:"Seattle", stadium:"Lumen Field", country:"usa", lat:47.595, lon:-122.332, capacity:"68,740", matches:5 },
+  { name:"Houston", stadium:"NRG Stadium", country:"usa", lat:29.685, lon:-95.411, capacity:"72,220", matches:5 },
+  { name:"Kansas City", stadium:"Arrowhead Stadium", country:"usa", lat:39.049, lon:-94.484, capacity:"76,416", matches:5 },
+  { name:"Philadelphia", stadium:"Lincoln Financial Field", country:"usa", lat:39.901, lon:-75.168, capacity:"69,796", matches:5 },
+  { name:"Boston", stadium:"Gillette Stadium", country:"usa", lat:42.091, lon:-71.264, capacity:"65,878", matches:5 },
+  { name:"Toronto", stadium:"BMO Field", country:"canada", lat:43.633, lon:-79.419, capacity:"30,000", matches:6 },
+  { name:"Vancouver", stadium:"BC Place", country:"canada", lat:49.277, lon:-123.112, capacity:"54,500", matches:6 },
+  { name:"Mexico City", stadium:"Estadio Azteca", country:"mexico", lat:19.303, lon:-99.150, capacity:"87,523", matches:5, note:"PARTIDO INAUGURAL" },
+  { name:"Guadalajara", stadium:"Estadio Akron", country:"mexico", lat:20.671, lon:-103.451, capacity:"45,000", matches:5 },
+  { name:"Monterrey", stadium:"Estadio BBVA", country:"mexico", lat:25.669, lon:-100.311, capacity:"53,500", matches:5 },
+];
+
+const COUNTRY_COLORS = { usa:"#0041c9", mexico:"#00B140", canada:"#ED1C24" };
+const COUNTRY_NAMES = { usa:"USA", mexico:"México", canada:"Canadá" };
+
+const WEATHER_API_KEY = 'a8295057e7255aaedcafc7ad90a723d9';
+
+async function fetchWeather(lat, lon) {
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric&lang=es`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('Weather unavailable');
+  return res.json();
+}
+
+function buildWeatherHTML(data) {
+  const temp = Math.round(data.main.temp);
+  const feelsLike = Math.round(data.main.feels_like);
+  const humidity = data.main.humidity;
+  const windKmh = Math.round(data.wind.speed * 3.6);
+  const desc = data.weather[0].description;
+  const icon = data.weather[0].icon;
+  return `
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+      <img src="https://openweathermap.org/img/wn/${icon}@2x.png" style="width:44px;height:44px;margin:-6px -4px;" alt="${desc}"/>
+      <div>
+        <p style="font-size:22px;font-weight:800;color:#1d1a24;margin:0;line-height:1.1">${temp}°C</p>
+        <p style="font-size:11px;color:#4a4455;margin:0;text-transform:capitalize">${desc}</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;">
+      <p style="font-size:11px;color:#4a4455;margin:0">💧 Humedad: <strong>${humidity}%</strong></p>
+      <p style="font-size:11px;color:#4a4455;margin:0">💨 Viento: <strong>${windKmh} km/h</strong></p>
+      <p style="font-size:11px;color:#4a4455;margin:0">🌡 Sensación: <strong>${feelsLike}°C</strong></p>
+    </div>
+  `;
+}
+
+function weatherId(cityName) {
+  return 'weather-' + cityName.replace(/[^a-z0-9]/gi, '-');
+}
+
+// Init map
+const map = L.map('map-container', {
+  center: [38, -96],
+  zoom: 4,
+  zoomControl: false,
+  minZoom: 3,
+  maxZoom: 10
+});
+
+// Custom zoom control position
+L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+// Tile layer - light style, no API key
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+  subdomains: 'abcd',
+  maxZoom: 19
+}).addTo(map);
+
+// Markers layer group
+const markersLayer = L.layerGroup().addTo(map);
+const markers = [];
+
+// Create custom icon
+function createIcon(country) {
+  const color = COUNTRY_COLORS[country];
+  return L.divIcon({
+    className: '',
+    html: `<div style="
+      width:18px;height:18px;border-radius:50%;
+      background:${color};
+      border:3px solid white;
+      box-shadow:0 2px 8px rgba(0,0,0,0.4);
+      cursor:pointer;
+      transition:transform 0.2s;
+    "></div>`,
+    iconSize: [18, 18],
+    iconAnchor: [9, 9],
+    popupAnchor: [0, -12]
+  });
+}
+
+// Build popup HTML
+function buildPopup(city) {
+  const color = COUNTRY_COLORS[city.country];
+  const countryName = COUNTRY_NAMES[city.country];
+  return `
+    <div style="font-family:'Plus Jakarta Sans',sans-serif;width:240px;padding:16px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <span style="background:${color};color:white;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;text-transform:uppercase;letter-spacing:0.1em">${countryName}</span>
+        ${city.note ? `<span style="background:#ED1C24;color:white;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;text-transform:uppercase;">${city.note}</span>` : ''}
+      </div>
+      <h3 style="font-size:18px;font-weight:800;color:#1d1a24;margin:0 0 2px 0;line-height:1.2">${city.name}</h3>
+      <p style="font-size:13px;color:#4a4455;margin:0 0 12px 0">${city.stadium}</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+        <div style="background:#f3ebfa;padding:8px;border-radius:8px;">
+          <p style="font-size:10px;font-weight:700;color:#4a4455;text-transform:uppercase;letter-spacing:0.1em;margin:0 0 2px 0">Capacidad</p>
+          <p style="font-size:16px;font-weight:800;color:#ED1C24;margin:0">${city.capacity}</p>
+        </div>
+        <div style="background:#f3ebfa;padding:8px;border-radius:8px;">
+          <p style="font-size:10px;font-weight:700;color:#4a4455;text-transform:uppercase;letter-spacing:0.1em;margin:0 0 2px 0">Partidos</p>
+          <p style="font-size:16px;font-weight:800;color:#4700a8;margin:0">${city.matches}</p>
+        </div>
+      </div>
+      <div id="${weatherId(city.name)}" style="margin:10px 0;padding:10px;background:#f3ebfa;border-radius:8px;border:1px solid #ccc3d8;">
+        <p style="font-size:10px;font-weight:700;color:#4a4455;text-transform:uppercase;letter-spacing:0.1em;margin:0 0 6px 0">🌤 Clima Actual</p>
+        <p style="font-size:12px;color:#7b7487;margin:0">Cargando...</p>
+      </div>
+      <a href="stadiums.html" style="display:inline-flex;align-items:center;gap:4px;background:#ED1C24;color:white;font-size:12px;font-weight:700;padding:6px 14px;border-radius:6px;text-decoration:none;text-transform:uppercase;letter-spacing:0.05em">Ver Estadio →</a>
+    </div>
+  `;
+}
+
+// Add markers
+CITIES.forEach(city => {
+  const marker = L.marker([city.lat, city.lon], {
+    icon: createIcon(city.country)
+  }).addTo(markersLayer);
+
+  marker.bindPopup(buildPopup(city), { maxWidth: 260, minWidth: 240 });
+  marker.cityData = city;
+  markers.push(marker);
+
+  marker.on('popupopen', async () => {
+    const el = document.getElementById(weatherId(city.name));
+    if (!el || el.dataset.loaded) return;
+    try {
+      const data = await fetchWeather(city.lat, city.lon);
+      el.innerHTML = `
+        <p style="font-size:10px;font-weight:700;color:#4a4455;text-transform:uppercase;letter-spacing:0.1em;margin:0 0 4px 0">🌤 Clima Actual</p>
+        ${buildWeatherHTML(data)}
+      `;
+      el.dataset.loaded = 'true';
+    } catch(e) {
+      el.innerHTML = `<p style="font-size:11px;color:#ba1a1a;margin:0">No se pudo cargar el clima</p>`;
+    }
+  });
+});
+
+// Sidebar city list
+function buildSidebarList(filter = 'all') {
+  const list = document.getElementById('city-list');
+  list.innerHTML = '';
+  const grouped = { usa:[], mexico:[], canada:[] };
+  CITIES.filter(c => filter === 'all' || c.country === filter)
+    .forEach(c => grouped[c.country].push(c));
+
+  ['usa','mexico','canada'].forEach(country => {
+    if (!grouped[country].length) return;
+    const section = document.createElement('div');
+    section.innerHTML = `<div class="px-md py-xs text-xs font-bold uppercase tracking-widest" style="background:#f3ebfa;color:${COUNTRY_COLORS[country]}">${COUNTRY_NAMES[country]}</div>`;
+    grouped[country].forEach(city => {
+      const item = document.createElement('button');
+      item.className = 'w-full text-left px-md py-sm border-b border-outline-variant hover:bg-surface-container-high transition-colors flex items-center gap-sm group';
+      item.innerHTML = `
+        <span style="width:10px;height:10px;border-radius:50%;background:${COUNTRY_COLORS[city.country]};flex-shrink:0"></span>
+        <div class="flex-grow min-w-0">
+          <p class="font-label-bold text-xs text-on-surface truncate">${city.name}</p>
+          <p class="text-[11px] text-on-surface-variant truncate">${city.stadium}</p>
+        </div>
+        <span class="material-symbols-outlined text-on-surface-variant text-sm opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+      `;
+      item.addEventListener('click', () => {
+        const m = markers.find(mk => mk.cityData.name === city.name);
+        if (m) {
+          map.flyTo([city.lat, city.lon], 8, { duration: 1.2 });
+          setTimeout(() => m.openPopup(), 1200);
+        }
+      });
+      section.appendChild(item);
+    });
+    list.appendChild(section);
+  });
+}
+
+buildSidebarList();
+
+// Map filter pills
+document.querySelectorAll('.map-filter').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.map-filter').forEach(b => {
+      b.classList.remove('active', 'bg-on-surface', 'text-surface', 'bg-secondary', 'text-white', 'bg-fifa-green', 'bg-fifa-red');
+      b.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+    });
+    btn.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+    btn.classList.add('active');
+    if (filter === 'all') btn.classList.add('bg-on-surface', 'text-surface');
+    else if (filter === 'usa') btn.classList.add('bg-secondary', 'text-white');
+    else if (filter === 'mexico') btn.classList.add('bg-fifa-green', 'text-white');
+    else if (filter === 'canada') btn.classList.add('bg-fifa-red', 'text-white');
+
+    markers.forEach(m => {
+      if (filter === 'all' || m.cityData.country === filter) {
+        if (!map.hasLayer(m)) markersLayer.addLayer(m);
+      } else {
+        markersLayer.removeLayer(m);
+      }
+    });
+    buildSidebarList(filter);
+  });
+});
+
+// Mobile sidebar toggle
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebar-toggle');
+const sidebarIcon = document.getElementById('sidebar-icon');
+let sidebarOpen = true;
+sidebarToggle.addEventListener('click', () => {
+  sidebarOpen = !sidebarOpen;
+  if (sidebarOpen) {
+    sidebar.classList.remove('hidden-sidebar');
+    sidebarIcon.textContent = 'chevron_left';
+    sidebarToggle.style.left = '0';
+  } else {
+    sidebar.classList.add('hidden-sidebar');
+    sidebarIcon.textContent = 'chevron_right';
+    sidebarToggle.style.left = '0';
+  }
+  setTimeout(() => map.invalidateSize(), 320);
+});
+
+// Mobile menu
+const mobileMenuEl = document.getElementById('mobile-menu');
+document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+  mobileMenuEl.classList.remove('hidden');
+  requestAnimationFrame(() => { mobileMenuEl.style.opacity = '1'; });
+});
+document.getElementById('close-menu').addEventListener('click', () => {
+  mobileMenuEl.style.opacity = '0';
+  setTimeout(() => { mobileMenuEl.classList.add('hidden'); }, 300);
+});
+
+// Page transitions
+document.querySelectorAll('a[href]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const href = link.getAttribute('href');
+    if (href && !href.startsWith('#') && !href.startsWith('mailto') && !link.target) {
+      e.preventDefault();
+      document.body.classList.add('fade-out');
+      setTimeout(() => { window.location = href; }, 280);
+    }
+  });
+});
+
+
+</script>
+</body>
+</html>
